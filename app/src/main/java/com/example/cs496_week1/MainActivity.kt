@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 111
             )
         } else {
-            setUpTabs(readContact())
+            readContact()
         }
     }
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            cursor = readContact()
+            readContact()
     }
 
 
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
-    private fun readContact(): ArrayList<ArrayList<String>> {
+    private fun readContact() {
         val l = arrayListOf<ArrayList<String>>()
         val result = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -84,6 +84,6 @@ class MainActivity : AppCompatActivity() {
                 l.add(arrayListOf<String>(result.getString(0), result.getString(1)))
             }
         }
-        return l
+        setUpTabs(l)
     }
 }
