@@ -10,28 +10,12 @@ import android.widget.Toast.LENGTH_SHORT
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
 
-class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(cursor: ArrayList<ArrayList<String>>) :
+    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private val name = arrayOf(
-        "조재구",
-        "조재구", "조재구", "조재구",
-        "조재구", "9913dc4", "조재구",
-        "조재구"
-    )
-
-    private val studentId = arrayOf(
-        "20170633", "20170633",
-        "20170633", "20170633",
-        "20170633", "20170633",
-        "20170633", "20170633"
-    )
-
-    private val number = arrayOf(
-        "010-9833-1299",
-        "010-9833-1299", "010-9833-1299", "010-9833-1299",
-        "010-9833-1299", "010-9833-1299", "010-9833-1299",
-        "010-9833-1299"
-    )
+    private var name = cursor
+    private var studentId = cursor
+    private var number = cursor
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemName: TextView
@@ -60,9 +44,9 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemName.text = name[position]
-        holder.itemStudentId.text = studentId[position]
-        holder.itemNumber.text = number[position]
+        holder.itemName.text = name[position][0]
+        holder.itemStudentId.text = studentId[position][1]
+        holder.itemNumber.text = number[position][0]
         holder.itemPhoto.setImageResource(R.drawable.ic_baseline_person_24)
     }
 

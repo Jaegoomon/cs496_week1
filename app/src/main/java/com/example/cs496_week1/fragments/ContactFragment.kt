@@ -1,5 +1,6 @@
 package com.example.cs496_week1.fragments
 
+import android.database.Cursor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,10 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
 
-class ContactFragment : Fragment() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-
+class ContactFragment(var cursor: ArrayList<ArrayList<String>>) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +24,7 @@ class ContactFragment : Fragment() {
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = RecyclerAdapter()
+            adapter = RecyclerAdapter(cursor)
         }
     }
 }
