@@ -5,17 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ContactFragment">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Favorite"
-            android:textColor="@color/black"
-            android:textSize="24dp" />
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
