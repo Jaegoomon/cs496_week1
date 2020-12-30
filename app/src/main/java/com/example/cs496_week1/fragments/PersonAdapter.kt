@@ -3,6 +3,7 @@ package com.example.cs496_week1.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -13,9 +14,7 @@ import com.example.cs496_week1.R
 class RecyclerAdapter(cursor: ArrayList<ArrayList<String>>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private var name = cursor
-    private var studentId = cursor
-    private var number = cursor
+    private var data = cursor
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemName: TextView
@@ -44,13 +43,13 @@ class RecyclerAdapter(cursor: ArrayList<ArrayList<String>>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemName.text = name[position][0]
-        holder.itemStudentId.text = studentId[position][1]
-        holder.itemNumber.text = number[position][0]
+        holder.itemName.text = data[position][0]
+        holder.itemStudentId.text = data[position][1]
+        holder.itemNumber.text = data[position][0]
         holder.itemPhoto.setImageResource(R.drawable.ic_baseline_person_24)
     }
 
     override fun getItemCount(): Int {
-        return name.size
+        return data.size
     }
 }
