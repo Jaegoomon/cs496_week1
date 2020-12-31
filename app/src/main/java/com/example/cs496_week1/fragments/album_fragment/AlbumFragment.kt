@@ -22,7 +22,6 @@ import java.io.IOException
 
 class AlbumFragment : Fragment() {
     private val OPEN_GALLERY = 1
-    private val idx = 20
 
     private val img = arrayListOf(
         R.drawable.img1, R.drawable.img2, R.drawable.img3,
@@ -57,7 +56,6 @@ class AlbumFragment : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         itemView.findViewById<RecyclerView>(R.id.recycler_view).apply {
-            // layoutManager = GridLayoutManager(activity, 3)
             layoutManager = LinearLayoutManager(activity)
             adapter = RecyclerAdapterImage(img)
         }

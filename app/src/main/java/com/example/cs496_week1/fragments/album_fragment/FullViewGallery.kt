@@ -15,7 +15,7 @@ class FullViewGallery : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_view_gallery)
 
-        var fullImg: ImageView = findViewById(R.id.fullViewGallery)
+        var fullImg: PhotoView = findViewById(R.id.fullViewGallery)
         val intent: Intent = getIntent()
         val img = intent.getParcelableExtra<Uri>("img")
 
