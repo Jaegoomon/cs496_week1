@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cs496_week1.R
 
-class RecyclerAdapterImage(img: ArrayList<PhotoInfo>) :
+class RecyclerAdapterImage(img: ArrayList<String>) :
     RecyclerView.Adapter<RecyclerAdapterImage.ViewHolder>() {
     private val img = img
 
@@ -21,7 +21,8 @@ class RecyclerAdapterImage(img: ArrayList<PhotoInfo>) :
                 val position: Int = getAdapterPosition()
                 val context = itemView.context
                 val intent = Intent(context, FullView::class.java).apply {
-                    putExtra("uri", img[position].uri)
+                    putExtra("position", position)
+                    putExtra("uri_group", img)
                 }
                 context.startActivity(intent)
             }
@@ -35,7 +36,7 @@ class RecyclerAdapterImage(img: ArrayList<PhotoInfo>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        Glide.with(viewHolder.itemImg).load(img[i].uri).into(viewHolder.itemImg)
+        Glide.with(viewHolder.itemImg).load(img[i]).into(viewHolder.itemImg)
     }
 
     override fun getItemCount(): Int {

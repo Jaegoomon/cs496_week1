@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setUpTabs(cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<PhotoInfo>) {
+    private fun setUpTabs(cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<String>) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
 
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun readData() {
         val contactData = arrayListOf<ContactInfo>()
-        val photoData = arrayListOf<PhotoInfo>()
+        val photoData = arrayListOf<String>()
         val result = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             cols,
@@ -126,9 +126,7 @@ class MainActivity : AppCompatActivity() {
         if (photo != null) {
             while (photo.moveToNext()) {
                 val uri = photo.getString(photo.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
-                val obj = PhotoInfo()
-                obj.uri = uri
-                photoData.add(obj)
+                photoData.add(uri)
             }
             photo.close()
         }

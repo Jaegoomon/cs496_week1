@@ -9,7 +9,7 @@ import com.example.cs496_week1.fragments.album_fragment.PhotoInfo
 import com.example.cs496_week1.fragments.contact_fragment.ContactFragment
 import com.example.cs496_week1.fragments.setting_fragment.SettingsFragment
 
-class ViewPageAdpater(fragmentActivity: FragmentActivity, cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<PhotoInfo>) :
+class ViewPageAdpater(fragmentActivity: FragmentActivity, cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<String>) :
     FragmentStateAdapter(fragmentActivity) {
     val fragment1 = ContactFragment(cursor1)
     val fragment2 = AlbumFragment(cursor2)

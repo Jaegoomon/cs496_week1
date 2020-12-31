@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
 
 
-class AlbumFragment(cursor: ArrayList<PhotoInfo>) : Fragment() {
+class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private val cursor = cursor
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,6 @@ class AlbumFragment(cursor: ArrayList<PhotoInfo>) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_album, container, false)
     }
 
