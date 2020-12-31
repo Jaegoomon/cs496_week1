@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -32,7 +33,7 @@ class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        val add_button: Button = view.findViewById(R.id.add_button)
+        val add_button: ImageButton = view.findViewById(R.id.add_button)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = RecyclerAdapter(cursor)
@@ -45,7 +46,7 @@ class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
         Log.d("sequence", "ContactFragment-onActivityResult")
     }
 
-    private fun addButtonListener(button: Button) {
+    private fun addButtonListener(button: ImageButton) {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddContactActivity::class.java)
             startActivityForResult(intent, 1)
