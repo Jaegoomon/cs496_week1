@@ -83,7 +83,13 @@ class MainActivity : AppCompatActivity() {
         )
         if (result != null) {
             while (result.moveToNext()) {
-                l.add(arrayListOf<String>(result.getString(0), result.getString(1)))
+                l.add(
+                    arrayListOf<String>(
+                        result.getString(0),
+                        result.getString(1),
+                        result.getString(2)
+                    )
+                )
             }
         }
         setUpTabs(l)

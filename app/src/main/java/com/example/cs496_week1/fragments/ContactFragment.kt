@@ -30,6 +30,7 @@ class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         val add_button: Button = view.findViewById(R.id.add_button)
         recycler_view.apply {
@@ -37,21 +38,12 @@ class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
             adapter = RecyclerAdapter(cursor)
         }
         addButtonListener(add_button)
-        Log.d("sequence", "onViewCreated")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
-            name = data?.getStringExtra("name")
-            studentId = data?.getStringExtra("student_id")
-            phoneNumber = data?.getStringExtra("phone_number")
-
-            if (name != null) {
-                cursor.add(arrayListOf(name!!, phoneNumber!!))
-            }
-        }
-        Log.d("sequence", "onActivityResult")
+        Log.d("sequence", "ContactFragment-onActivityResult")
+        refresh()
     }
 
     private fun addButtonListener(button: Button) {
