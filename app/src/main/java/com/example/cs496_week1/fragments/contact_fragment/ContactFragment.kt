@@ -14,9 +14,6 @@ import com.example.cs496_week1.R
 import com.example.cs496_week1.fragments.RecyclerAdapter
 
 class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
-    var name: String? = null
-    var studentId: String? = null
-    var phoneNumber: String? = null
     var cursor = cursor
 
     override fun onCreateView(

@@ -1,11 +1,8 @@
 package com.example.cs496_week1.fragments.album_fragment
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.cs496_week1.R
 import com.github.chrisbanes.photoview.PhotoView

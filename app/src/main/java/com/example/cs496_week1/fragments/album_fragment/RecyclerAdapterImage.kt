@@ -1,7 +1,6 @@
 package com.example.cs496_week1.fragments.album_fragment
 
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
