@@ -21,6 +21,5 @@
         app:tabGravity="fill"
         app:tabInlineLabel="true"
         app:tabMode="fixed"
-        app:tabTextAppearance="@style/CustomTabStyle"
-        app:tabTextColor="@color/white" />
+        app:tabTextAppearance="@style/CustomTabStyle" />
 </LinearLayout>
