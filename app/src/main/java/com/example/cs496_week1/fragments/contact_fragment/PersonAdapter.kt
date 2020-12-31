@@ -27,11 +27,6 @@ class RecyclerAdapter(cursor: ArrayList<ContactInfo>) :
             itemStudentId = itemView.findViewById(R.id.student_id)
             itemNumber = itemView.findViewById(R.id.phone_number)
             itemPhoto = itemView.findViewById(R.id.photo)
-
-            itemView.setOnClickListener {
-                var position = adapterPosition
-                val context = itemView.context
-            }
         }
     }
 
