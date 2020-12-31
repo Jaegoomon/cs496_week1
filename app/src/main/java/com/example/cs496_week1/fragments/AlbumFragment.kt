@@ -18,10 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
 import com.example.cs496_week1.fragments.adapters.RecyclerAdapterImage
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 
 
 class AlbumFragment : Fragment() {
@@ -75,17 +72,18 @@ class AlbumFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("TAG", "message1")
 
         if(resultCode == Activity.RESULT_OK){
-            Log.d("TAG", "message2")
             if(requestCode == OPEN_GALLERY) {
-                Log.d("TAG", "message3")
-
                 var photoUri: Uri? = data?.data
+
                 val bitmap = loadBitmapFromMediaStoreBy(photoUri!!)
+
                 if (bitmap != null) {
-                    saveBitmapAsFile(bitmap, "/")
+                    Log.d("TAG", "message4")
+                    val intent = Intent(activity, FullViewGallery::class.java)
+                    intent.putExtra("img", bitmap)
+                    startActivityForResult(intent, 1)
                 }
             }
         }
@@ -105,19 +103,6 @@ class AlbumFragment : Fragment() {
             e.printStackTrace()
         }
         return image
-    }
-
-    private fun saveBitmapAsFile(bitmap: Bitmap, filepath: String) {
-        val file = File(filepath)
-        var os: OutputStream? = null
-        try {
-            file.createNewFile()
-            os = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os)
-            os.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
 }
