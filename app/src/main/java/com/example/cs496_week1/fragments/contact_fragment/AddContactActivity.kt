@@ -43,9 +43,6 @@ class AddContactActivity : AppCompatActivity() {
                     )
                     startActivityForResult(this, 1)
                 }
-            } else {
-                Log.d("sequence", "sadfasdfsafdsafasfdasfds")
-                Toast.makeText(this@AddContactActivity, "Please fill all the fields", LENGTH_SHORT)
             }
         }
     }

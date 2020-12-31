@@ -6,4 +6,6 @@ class ContactInfo {
     var name = ""
     var number = ""
     var image: Bitmap? = null
+    var id = ""
+    var lookup = ""
 }

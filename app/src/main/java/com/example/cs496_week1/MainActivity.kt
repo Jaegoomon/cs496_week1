@@ -20,7 +20,9 @@ class MainActivity : AppCompatActivity() {
     var cols = listOf<String>(
         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
         ContactsContract.CommonDataKinds.Phone.NUMBER,
-        ContactsContract.CommonDataKinds.Phone.PHOTO_URI
+        ContactsContract.CommonDataKinds.Phone.PHOTO_URI,
+        ContactsContract.CommonDataKinds.Phone._ID,
+        ContactsContract.Contacts.LOOKUP_KEY
     ).toTypedArray()
     var cursor = arrayListOf<ArrayList<String>>()
 
@@ -104,10 +106,15 @@ class MainActivity : AppCompatActivity() {
             while (result.moveToNext()) {
                 val name = result.getString(0)
                 val number = result.getString(1)
-                val obj = ContactInfo()
                 val photo = result.getString(2)
+                val id = result.getString(3)
+                val lookup = result.getString(4)
+
+                val obj = ContactInfo()
                 obj.name = name
                 obj.number = number
+                obj.id = id
+                obj.lookup = lookup
                 if (photo != null) {
                     obj.image = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(photo))
                 }
@@ -119,7 +126,6 @@ class MainActivity : AppCompatActivity() {
         if (photo != null) {
             while (photo.moveToNext()) {
                 val uri = photo.getString(photo.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
-                Log.d("asdfsadf", uri)
                 val obj = PhotoInfo()
                 obj.uri = uri
                 photoData.add(obj)
