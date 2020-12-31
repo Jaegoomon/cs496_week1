@@ -32,12 +32,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
 
     override fun onStart() {
         super.onStart()
         Log.d("sequence", "restart")
+        setContentView(R.layout.activity_main)
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_CONTACTS
@@ -64,11 +64,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setUpTabs(cursor: ArrayList<ContactInfo>) {
+    private fun setUpTabs(cursor: ArrayList<ContactInfo>, current: Int = 0) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
 
         pager2.adapter = ViewPageAdpater(this@MainActivity, cursor)
+        pager2.setCurrentItem(current)
         TabLayoutMediator(tabs, pager2) { tab, position ->
             tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]
