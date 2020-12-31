@@ -12,7 +12,7 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_pertanyaan"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
@@ -25,13 +25,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/photo"
-                android:layout_width="170dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:background="@color/teal_200"
                 android:src="@drawable/ic_baseline_person_24" />
 
@@ -44,14 +43,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/name"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
+                        android:gravity="left|bottom"
                         android:hint="이름" />
 
                     <EditText
@@ -59,6 +58,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="left|bottom"
                         android:hint="학번" />
                 </LinearLayout>
 
@@ -67,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
+                    android:gravity="left|bottom"
                     android:hint="전화번호" />
             </LinearLayout>
         </LinearLayout>

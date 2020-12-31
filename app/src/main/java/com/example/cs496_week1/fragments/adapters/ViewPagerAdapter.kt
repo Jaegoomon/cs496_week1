@@ -4,11 +4,12 @@ import android.database.Cursor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.cs496_week1.ContactInfo
 import com.example.cs496_week1.fragments.AlbumFragment
 import com.example.cs496_week1.fragments.ContactFragment
 import com.example.cs496_week1.fragments.SettingsFragment
 
-class ViewPageAdpater(fragmentActivity: FragmentActivity, cursor: ArrayList<ArrayList<String>>) :
+class ViewPageAdpater(fragmentActivity: FragmentActivity, cursor: ArrayList<ContactInfo>) :
     FragmentStateAdapter(fragmentActivity) {
     val fragment1 = ContactFragment(cursor)
     val fragment2 = AlbumFragment()

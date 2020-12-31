@@ -14,9 +14,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.AddContactActivity
+import com.example.cs496_week1.ContactInfo
 import com.example.cs496_week1.R
 
-class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
+class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
     var name: String? = null
     var studentId: String? = null
     var phoneNumber: String? = null

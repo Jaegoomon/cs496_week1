@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     var cols = listOf<String>(
         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
         ContactsContract.CommonDataKinds.Phone.NUMBER,
-        ContactsContract.CommonDataKinds.Phone._ID
+        ContactsContract.CommonDataKinds.Phone.PHOTO_URI
     ).toTypedArray()
     var cursor = arrayListOf<ArrayList<String>>()
 
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setUpTabs(cursor: ArrayList<ArrayList<String>>) {
+    private fun setUpTabs(cursor: ArrayList<ContactInfo>) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
 
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readContact() {
-        val l = arrayListOf<ArrayList<String>>()
+        val l = arrayListOf<ContactInfo>()
         val result = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             cols,
@@ -87,13 +89,16 @@ class MainActivity : AppCompatActivity() {
         )
         if (result != null) {
             while (result.moveToNext()) {
-                l.add(
-                    arrayListOf<String>(
-                        result.getString(0),
-                        result.getString(1),
-                        result.getString(2)
-                    )
-                )
+                val name = result.getString(0)
+                val number = result.getString(1)
+                val obj = ContactInfo()
+                val photo = result.getString(2)
+                obj.name = name
+                obj.number = number
+                if (photo != null) {
+                    obj.image = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(photo))
+                }
+                l.add(obj)
             }
         }
         setUpTabs(l)
