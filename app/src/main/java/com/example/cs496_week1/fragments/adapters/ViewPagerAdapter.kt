@@ -1,13 +1,12 @@
 package com.example.cs496_week1.fragments.adapters
 
-import android.database.Cursor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.cs496_week1.ContactInfo
-import com.example.cs496_week1.fragments.AlbumFragment
-import com.example.cs496_week1.fragments.ContactFragment
-import com.example.cs496_week1.fragments.SettingsFragment
+import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
+import com.example.cs496_week1.fragments.album_fragment.AlbumFragment
+import com.example.cs496_week1.fragments.contact_fragment.ContactFragment
+import com.example.cs496_week1.fragments.setting_fragment.SettingsFragment
 
 class ViewPageAdpater(fragmentActivity: FragmentActivity, cursor: ArrayList<ContactInfo>) :
     FragmentStateAdapter(fragmentActivity) {

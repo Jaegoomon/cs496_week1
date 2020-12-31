@@ -1,4 +1,4 @@
-package com.example.cs496_week1.fragments
+package com.example.cs496_week1.fragments.album_fragment
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -17,8 +17,8 @@ class FullViewGallery : AppCompatActivity() {
 
         var fullImg: ImageView = findViewById(R.id.fullViewGallery)
         val intent: Intent = getIntent()
-        val img = intent.getParcelableExtra<Bitmap>("img")
+        val img = intent.getParcelableExtra<Uri>("img")
 
-        fullImg.setImageBitmap(img)
+        fullImg.setImageURI(img)
     }
 }

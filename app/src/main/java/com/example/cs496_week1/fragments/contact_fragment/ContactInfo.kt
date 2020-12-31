@@ -1,4 +1,4 @@
-package com.example.cs496_week1
+package com.example.cs496_week1.fragments.contact_fragment
 
 import android.graphics.Bitmap
 

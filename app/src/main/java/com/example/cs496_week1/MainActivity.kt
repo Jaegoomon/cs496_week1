@@ -1,20 +1,17 @@
 package com.example.cs496_week1
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdpater
+import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

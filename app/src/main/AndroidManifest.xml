@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cs496_week1">
-        <activity android:name=".AddContactActivity"></activity>
-        <activity android:name=".fragments.FullViewGallery"></activity>
-        <activity android:name=".fragments.FullView" />
+        <activity android:name=".fragments.contact_fragment.AddContactActivity"></activity>
+        <activity android:name=".fragments.album_fragment.FullViewGallery"></activity>
+        <activity android:name=".fragments.album_fragment.FullView" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

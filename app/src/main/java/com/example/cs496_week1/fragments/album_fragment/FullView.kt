@@ -1,4 +1,4 @@
-package com.example.cs496_week1.fragments
+package com.example.cs496_week1.fragments.album_fragment
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -1,17 +1,12 @@
-package com.example.cs496_week1.fragments.adapters
+package com.example.cs496_week1.fragments.album_fragment
 
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
-import com.example.cs496_week1.fragments.FullView
 
 class RecyclerAdapterImage(img: ArrayList<Int>) : RecyclerView.Adapter<RecyclerAdapterImage.ViewHolder>() {
 
@@ -37,7 +32,7 @@ class RecyclerAdapterImage(img: ArrayList<Int>) : RecyclerView.Adapter<RecyclerA
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.thumb_view, viewGroup, false)
+            .inflate(R.layout.fragment_album_thumb_view, viewGroup, false)
 
         return ViewHolder(v)
     }

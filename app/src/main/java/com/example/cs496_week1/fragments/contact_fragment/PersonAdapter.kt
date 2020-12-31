@@ -3,13 +3,12 @@ package com.example.cs496_week1.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cs496_week1.ContactInfo
+import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.example.cs496_week1.R
 
 class RecyclerAdapter(cursor: ArrayList<ContactInfo>) :
@@ -39,7 +38,7 @@ class RecyclerAdapter(cursor: ArrayList<ContactInfo>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view, parent, false)
+            .inflate(R.layout.fragment_contract_card_view, parent, false)
         return ViewHolder(view)
     }
 

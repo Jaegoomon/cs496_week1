@@ -1,4 +1,4 @@
-package com.example.cs496_week1.fragments
+package com.example.cs496_week1.fragments.album_fragment
 
 import android.app.Activity
 import android.content.Intent
@@ -12,12 +12,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
-import com.example.cs496_week1.fragments.adapters.RecyclerAdapterImage
 import java.io.IOException
 
 
@@ -49,8 +48,8 @@ class AlbumFragment : Fragment() {
         // Inflate the layout for this fragment
         var v = inflater.inflate(R.layout.fragment_album, container, false)
 
-        var addBtn = v.findViewById<Button>(R.id.addBtn)
-        addBtn.setOnClickListener{ openGallary() }
+        var addBtn = v.findViewById<ImageButton>(R.id.addBtn)
+        addBtn.setOnClickListener { openGallary() }
 
         return v
     }
@@ -73,36 +72,14 @@ class AlbumFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode == Activity.RESULT_OK){
-            if(requestCode == OPEN_GALLERY) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == OPEN_GALLERY) {
                 var photoUri: Uri? = data?.data
-
-                val bitmap = loadBitmapFromMediaStoreBy(photoUri!!)
-
-                if (bitmap != null) {
-                    Log.d("TAG", "message4")
-                    val intent = Intent(activity, FullViewGallery::class.java)
-                    intent.putExtra("img", bitmap)
-                    startActivityForResult(intent, 1)
-                }
+                val intent = Intent(activity, FullViewGallery::class.java)
+                intent.putExtra("img", photoUri)
+                startActivity(intent)
             }
         }
-    }
-
-    fun loadBitmapFromMediaStoreBy(photoUri: Uri): Bitmap? {
-        var image: Bitmap? = null
-        try {
-            image = if (Build.VERSION.SDK_INT > 27) { // Api 버전별 이미지 처리
-                val source: ImageDecoder.Source =
-                    ImageDecoder.createSource(activity!!.contentResolver, photoUri)
-                ImageDecoder.decodeBitmap(source)
-            } else {
-                MediaStore.Images.Media.getBitmap(activity!!.contentResolver, photoUri)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return image
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.cs496_week1.fragments
+package com.example.cs496_week1.fragments.setting_fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

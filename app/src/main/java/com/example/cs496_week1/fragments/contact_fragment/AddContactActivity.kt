@@ -1,18 +1,15 @@
-package com.example.cs496_week1
+package com.example.cs496_week1.fragments.contact_fragment
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import androidx.core.widget.addTextChangedListener
+import com.example.cs496_week1.R
 
 class AddContactActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
