@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cs496_week1">
         <activity android:name=".AddContactActivity"></activity>
+        <activity android:name=".fragments.FullViewGallery"></activity>
+        <activity android:name=".fragments.FullView" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
