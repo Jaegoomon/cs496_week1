@@ -43,7 +43,6 @@ class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("sequence", "ContactFragment-onActivityResult")
-        refresh()
     }
 
     private fun addButtonListener(button: Button) {
@@ -51,12 +50,5 @@ class ContactFragment(cursor: ArrayList<ArrayList<String>>) : Fragment() {
             val intent: Intent = Intent(activity, AddContactActivity::class.java)
             startActivityForResult(intent, 1)
         }
-    }
-
-    private fun refresh() {
-        val a = this.fragmentManager!!.beginTransaction()
-        a.detach(this)
-        a.attach(this)
-        a.commit()
     }
 }

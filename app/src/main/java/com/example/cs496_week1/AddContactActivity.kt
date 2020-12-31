@@ -44,9 +44,10 @@ class AddContactActivity : AppCompatActivity() {
                         ContactsContract.Intents.Insert.PHONE,
                         phone_number.getText().toString()
                     )
-                    startActivity(this)
+                    startActivityForResult(this, 1)
                 }
             } else {
+                Log.d("sequence", "sadfasdfsafdsafasfdasfds")
                 Toast.makeText(this@AddContactActivity, "Please fill all the fields", LENGTH_SHORT)
             }
         }
