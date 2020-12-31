@@ -4,12 +4,11 @@
     android:id="@+id/thumbView"
     android:layout_width="match_parent"
     android:layout_height="96dp"
-    android:layout_marginLeft="12dp"
+    android:layout_marginLeft="8dp"
     android:layout_marginTop="15dp"
-    android:layout_marginRight="12dp"
+    android:layout_marginRight="8dp"
     android:clickable="true"
     android:foreground="?selectableItemBackground"
-    card_view:cardBackgroundColor="#FFFF"
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout

@@ -3,6 +3,7 @@
     package="com.example.cs496_week1">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cs496_week1">
         <activity android:name=".fragments.contact_fragment.AddContactActivity"></activity>
-        <activity android:name=".fragments.album_fragment.FullViewGallery"></activity>
         <activity android:name=".fragments.album_fragment.FullView" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdpater
+import com.example.cs496_week1.fragments.album_fragment.PhotoInfo
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -32,25 +33,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED || (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+
+                ),
+                111
+            )
+        } else {
+            readData()
+        }
     }
 
     override fun onStart() {
         super.onStart()
         Log.d("sequence", "restart")
-        setContentView(R.layout.activity_main)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_CONTACTS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                Array(1) { Manifest.permission.READ_CONTACTS },
-                111
-            )
-        } else {
-            readContact()
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -60,30 +68,37 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            readContact()
+            readData()
     }
 
 
-    private fun setUpTabs(cursor: ArrayList<ContactInfo>, current: Int = 0) {
+    private fun setUpTabs(cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<PhotoInfo>) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
 
-        pager2.adapter = ViewPageAdpater(this@MainActivity, cursor)
-        pager2.setCurrentItem(current)
+        pager2.adapter = ViewPageAdpater(this@MainActivity, cursor1, cursor2)
         TabLayoutMediator(tabs, pager2) { tab, position ->
             tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]
         }.attach()
     }
 
-    private fun readContact() {
-        val l = arrayListOf<ContactInfo>()
+    private fun readData() {
+        val contactData = arrayListOf<ContactInfo>()
+        val photoData = arrayListOf<PhotoInfo>()
         val result = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             cols,
             null,
             null,
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+        )
+        val photo = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            null,
+            null,
+            null,
+            null
         )
         if (result != null) {
             while (result.moveToNext()) {
@@ -96,9 +111,21 @@ class MainActivity : AppCompatActivity() {
                 if (photo != null) {
                     obj.image = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(photo))
                 }
-                l.add(obj)
+                contactData.add(obj)
             }
+            result.close()
         }
-        setUpTabs(l)
+
+        if (photo != null) {
+            while (photo.moveToNext()) {
+                val uri = photo.getString(photo.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+                Log.d("asdfsadf", uri)
+                val obj = PhotoInfo()
+                obj.uri = uri
+                photoData.add(obj)
+            }
+            photo.close()
+        }
+        setUpTabs(contactData, photoData)
     }
 }
