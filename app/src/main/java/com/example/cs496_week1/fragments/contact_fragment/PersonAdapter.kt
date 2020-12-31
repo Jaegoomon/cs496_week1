@@ -31,7 +31,6 @@ class RecyclerAdapter(cursor: ArrayList<ContactInfo>) :
             itemView.setOnClickListener {
                 var position = adapterPosition
                 val context = itemView.context
-                Toast.makeText(context, "" + position + " was clicked", LENGTH_SHORT).show()
             }
         }
     }
