@@ -1,4 +1,4 @@
-package com.example.cs496_week1.fragments.setting_fragment
+package com.example.cs496_week1.fragments.clip_fragment
 
 class UrlInfo(
     val title: String,

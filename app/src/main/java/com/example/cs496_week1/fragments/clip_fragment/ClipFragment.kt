@@ -1,9 +1,8 @@
-package com.example.cs496_week1.fragments.setting_fragment
+package com.example.cs496_week1.fragments.clip_fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
-class SettingsFragment : Fragment() {
+class ClipFragment : Fragment() {
 
     private var dataList: ArrayList<UrlInfo> = ArrayList()
 
