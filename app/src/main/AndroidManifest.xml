@@ -13,17 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cs496_week1">
-        <activity android:name=".fragments.contact_fragment.AddContactActivity"></activity>
+        <activity android:name=".fragments.setting_fragment.AddUrlActivity" />
+        <activity android:name=".fragments.contact_fragment.AddContactActivity" />
         <activity android:name=".fragments.album_fragment.FullView" />
-        <activity android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
