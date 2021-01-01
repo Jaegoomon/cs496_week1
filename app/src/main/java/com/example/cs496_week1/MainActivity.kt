@@ -17,15 +17,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
-    var cols = listOf<String>(
-        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-        ContactsContract.CommonDataKinds.Phone.NUMBER,
-        ContactsContract.CommonDataKinds.Phone.PHOTO_URI,
-        ContactsContract.CommonDataKinds.Phone._ID,
-        ContactsContract.Contacts.LOOKUP_KEY
-    ).toTypedArray()
-    var cursor = arrayListOf<ArrayList<String>>()
-
     private val tabTextList = arrayListOf("연락처", "사진", "몰라")
     private val tabIconList = arrayListOf(
         R.drawable.ic_baseline_phone_24,
@@ -58,11 +49,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("sequence", "restart")
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -90,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         val photoData = arrayListOf<String>()
         val result = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            cols,
+            null,
             null,
             null,
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
@@ -104,17 +90,17 @@ class MainActivity : AppCompatActivity() {
         )
         if (result != null) {
             while (result.moveToNext()) {
-                val name = result.getString(0)
-                val number = result.getString(1)
-                val photo = result.getString(2)
-                val id = result.getString(3)
-                val lookup = result.getString(4)
-
+                val photo =
+                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI))
                 val obj = ContactInfo()
-                obj.name = name
-                obj.number = number
-                obj.id = id
-                obj.lookup = lookup
+                obj.name =
+                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                obj.number =
+                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                obj.id =
+                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
+                obj.lookup =
+                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY))
                 if (photo != null) {
                     obj.image = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(photo))
                 }
