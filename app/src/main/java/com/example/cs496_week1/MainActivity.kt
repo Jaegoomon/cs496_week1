@@ -2,6 +2,7 @@ package com.example.cs496_week1
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -130,5 +131,9 @@ class MainActivity : AppCompatActivity() {
             photo.close()
         }
         setUpTabs(contactData, photoData)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
     }
 }

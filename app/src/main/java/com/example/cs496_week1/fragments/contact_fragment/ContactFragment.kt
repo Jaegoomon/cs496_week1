@@ -49,7 +49,7 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
     private fun addButtonListener(button: ImageButton) {
         button.setOnClickListener {
             AlertDialog.Builder(activity)
-                .setTitle("설명")
+                .setTitle("메뉴를 선택하세요")
                 .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
                 .setNegativeButton("연락처 추가") { dialogInterface: DialogInterface, i: Int -> addContentfunc() }
                 .show()
