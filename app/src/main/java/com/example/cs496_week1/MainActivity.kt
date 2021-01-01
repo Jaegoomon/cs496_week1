@@ -1,6 +1,7 @@
 package com.example.cs496_week1
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
         realm = Realm.getDefaultInstance()
     }
-
+    
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -62,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             readData()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+    }
 
     private fun setUpTabs(cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<String>) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
@@ -122,7 +126,5 @@ class MainActivity : AppCompatActivity() {
         setUpTabs(contactData, photoData)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
+
 }
