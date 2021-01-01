@@ -15,8 +15,10 @@ import com.example.cs496_week1.fragments.adapters.ViewPageAdpater
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import io.realm.Realm
 
 class MainActivity : AppCompatActivity() {
+    private var realm: Realm? = null
     private val tabTextList = arrayListOf("연락처", "사진", "몰라")
     private val tabIconList = arrayListOf(
         R.drawable.ic_baseline_phone_24,
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             readData()
         }
+        realm = Realm.getDefaultInstance()
     }
 
     override fun onRequestPermissionsResult(
