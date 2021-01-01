@@ -8,36 +8,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
+import io.realm.Realm
 
-class RecyclerAdapterUrl(private val context: Context, private val dataList: ArrayList<UrlInfo>) :
+class RecyclerAdapterUrl(private val context: Context) :
     RecyclerView.Adapter<RecyclerAdapterUrl.ViewHolder>() {
-
-    var mPosition = 0
-    fun getPosition(): Int{
-        return mPosition
-    }
-    private fun setPosition(position: Int){
-        mPosition = position
-    }
-    fun addItem(urlInfo: UrlInfo) {
-        dataList.add(urlInfo)
-        notifyDataSetChanged()
-    }
-    fun removeItem(position: Int) {
-        if(position > 0) {
-            dataList.removeAt(position)
-            notifyDataSetChanged()
-        }
-    }
+    val realm = Realm.getDefaultInstance()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var itemTitle: TextView  = itemView.findViewById(R.id.title)
+        var itemTitle: TextView = itemView.findViewById(R.id.title)
         var itemContent: TextView = itemView.findViewById(R.id.content)
-
-        fun bind(urlInfo: UrlInfo) {
-            itemTitle.text = urlInfo.title
-            itemContent.text = urlInfo.content
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,14 +26,12 @@ class RecyclerAdapterUrl(private val context: Context, private val dataList: Arr
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataList[position])
-        holder.itemView.setOnClickListener { view ->
-            setPosition(position)
-            Toast.makeText(view.context, "$position 아이템 클릭!", Toast.LENGTH_SHORT).show()
-        }
+        val data = realm.where(ClipData::class.java).equalTo("id", position).findFirst()
+        holder.itemTitle.setText(data!!.title)
+        holder.itemContent.setText(data!!.content)
     }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return realm.where(ClipData::class.java).findAll().size
     }
 }

@@ -19,9 +19,6 @@ import org.json.JSONObject
 import java.io.IOException
 
 class ClipFragment : Fragment() {
-
-    private var dataList: ArrayList<UrlInfo> = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -43,24 +40,14 @@ class ClipFragment : Fragment() {
         addButtonListener(add_button)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = RecyclerAdapterUrl(view.context, dataList)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            if (requestCode == 1111 && resultCode == 1234) {
-                val url = data.getStringExtra("url")
-                Log.d("asdf", "" + url)
-            }
+            adapter = RecyclerAdapterUrl(view.context)
         }
     }
 
     private fun addButtonListener(button: ImageButton) {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddUrlActivity::class.java)
-            startActivityForResult(intent, 1111)
+            startActivity(intent)
         }
     }
 }

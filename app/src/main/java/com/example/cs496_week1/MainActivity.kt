@@ -50,9 +50,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             readData()
         }
-        realm = Realm.getDefaultInstance()
     }
-    
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
