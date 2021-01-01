@@ -11,7 +11,6 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdpater
-import com.example.cs496_week1.fragments.album_fragment.PhotoInfo
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
