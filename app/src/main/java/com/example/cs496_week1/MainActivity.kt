@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val tabIconList = arrayListOf(
         R.drawable.ic_baseline_phone_24,
         R.drawable.ic_baseline_photo_24,
-        R.drawable.ic_baseline_question_answer_24
+        R.drawable.ic_paper_clip
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
