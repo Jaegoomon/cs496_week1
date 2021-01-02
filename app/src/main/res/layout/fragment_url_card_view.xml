@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Title"
+                android:lines="1"
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
@@ -41,7 +42,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
 
@@ -87,22 +88,25 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/revice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:background="@drawable/ic_baseline_create_24" />
 
             <ImageButton
+                android:id="@+id/copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:background="@drawable/ic_baseline_content_copy_24" />
 
             <ImageButton
+                android:id="@+id/trash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
-                android:background="@drawable/ic_baseline_share_24" />
+                android:background="@drawable/ic_baseline_restore_from_trash_24" />
         </LinearLayout>
 
     </LinearLayout>

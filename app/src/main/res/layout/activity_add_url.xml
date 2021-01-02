@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:lines="4"
+                    android:lines="3"
                     android:gravity="top"
                     android:hint="설명" />
 
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:lines="7"
+                    android:lines="6"
                     android:gravity="top"
                     android:hint="URL" />
             </LinearLayout>
