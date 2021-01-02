@@ -18,7 +18,6 @@ class AddUrlActivity : AppCompatActivity() {
     private lateinit var url: EditText
     private lateinit var title: EditText
     private lateinit var content: EditText
-    private lateinit var id: EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +29,6 @@ class AddUrlActivity : AppCompatActivity() {
         url = findViewById(R.id.url)
         title = findViewById(R.id.title)
         content = findViewById(R.id.content)
-        id = findViewById(R.id.id)
 
         button.setOnClickListener {
             addClibDB()
@@ -41,7 +39,13 @@ class AddUrlActivity : AppCompatActivity() {
     fun addClibDB() {
         try {
             val clipData = ClipData()
-            clipData.id = id.text.toString().toInt()
+            val index: Number? = realm.where(ClipData::class.java).max("id")
+            val nextId = if (index == null) {
+                0
+            } else {
+                index.toInt() + 1
+            }
+            clipData.id = nextId
             clipData.url = url.text.toString()
             clipData.title = title.text.toString()
             clipData.content = content.text.toString()
