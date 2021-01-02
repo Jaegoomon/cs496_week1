@@ -34,6 +34,7 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
         val deleteButton: ImageButton = itemView.findViewById(R.id.trash)
         val editButton: ImageButton = itemView.findViewById(R.id.revice)
         val copyButton: ImageButton = itemView.findViewById(R.id.copy)
+        val itemTag: TextView = itemView.findViewById(R.id.tag)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,6 +49,7 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
         holder.itemTitle.setText(data!!.title)
         holder.itemContent.setText(data!!.content)
         holder.itemIndex.setText((data!!.id + 1).toString())
+        holder.itemTag.setText(data!!.tag)
 
         holder.goToUrl.setOnClickListener {
             goToUrl(context, data!!.url)

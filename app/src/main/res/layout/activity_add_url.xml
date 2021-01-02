@@ -17,6 +17,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="15dp"
         android:clickable="true"
         android:foreground="?selectableItemBackground"
         card_view:cardBackgroundColor="#FFFF"
@@ -37,26 +38,39 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24dp"
-                    android:hint="제목" />
+                    android:hint="제목"
+                    android:textSize="24dp" />
 
                 <EditText
                     android:id="@+id/content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:lines="3"
                     android:gravity="top"
-                    android:hint="설명" />
+                    android:hint="설명"
+                    android:lines="3"
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:lines="6"
                     android:gravity="top"
-                    android:hint="URL" />
+                    android:hint="URL"
+                    android:lines="4"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="6dp"
+                    android:text="태그를 선택하세요"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
@@ -68,6 +82,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:text="확인"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
 </LinearLayout>

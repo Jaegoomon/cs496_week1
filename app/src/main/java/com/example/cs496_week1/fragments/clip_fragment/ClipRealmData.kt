@@ -7,4 +7,5 @@ open class ClipRealmData : RealmObject() {
     var url: String = ""
     var title: String = ""
     var content: String = ""
+    var tag: String = ""
 }

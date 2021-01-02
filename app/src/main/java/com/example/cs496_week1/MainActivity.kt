@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdpater
+import com.example.cs496_week1.fragments.clip_fragment.AddUrlActivity
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -26,10 +27,30 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_photo_24,
         R.drawable.ic_paper_clip
     )
+    private var defaultPage = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //
+        when {
+            intent?.action == Intent.ACTION_SEND -> {
+                if ("text/plain" == intent.type) {
+                    val data = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    if (data != null) {
+                        Log.d("receive data", data)
+                        defaultPage = 2
+                        val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
+                        intent.putExtra("url", data)
+                        startActivityForResult(intent, 2222)
+                    }
+                }
+            }
+            else -> {
+                Log.d("receive data", "None")
+            }
+        }
+        //
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_CONTACTS
@@ -75,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]
         }.attach()
+        pager2.setCurrentItem(defaultPage)
     }
 
     private fun readData() {
@@ -125,5 +147,7 @@ class MainActivity : AppCompatActivity() {
         setUpTabs(contactData, photoData)
     }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 }
