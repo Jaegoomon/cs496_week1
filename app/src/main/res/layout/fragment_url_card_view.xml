@@ -9,7 +9,7 @@
     android:layout_marginRight="6dp"
     android:clickable="true"
     android:foreground="?selectableItemBackground"
-    card_view:cardBackgroundColor="#70FFFFFF"
+    card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardCornerRadius="8dp"
     card_view:contentPadding="10dp">
 
@@ -18,42 +18,62 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:textColor="@color/black"
-            android:textSize="24dp" />
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="8"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="Content"
             android:textSize="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/logo"
-
             android:gravity="center"
             android:text="Youtube"
             android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textSize="11dp"
             android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:background="#AFAFAF" />
 
         <LinearLayout
