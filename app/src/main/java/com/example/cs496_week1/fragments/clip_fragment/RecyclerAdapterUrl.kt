@@ -1,13 +1,17 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
@@ -19,10 +23,11 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
     val realm = Realm.getDefaultInstance()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var itemTitle: TextView = itemView.findViewById(R.id.title)
-        var itemContent: TextView = itemView.findViewById(R.id.content)
-        var itemIndex: TextView = itemView.findViewById(R.id.index)
-        var deleteButton: ImageButton = itemView.findViewById(R.id.trash)
+        val itemTitle: TextView = itemView.findViewById(R.id.title)
+        val itemContent: TextView = itemView.findViewById(R.id.content)
+        val itemIndex: TextView = itemView.findViewById(R.id.index)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.trash)
+        val goToUrl: LinearLayout = itemView.findViewById(R.id.url_card)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,6 +49,9 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
                 .setNegativeButton("아니오") { _, _ -> }
                 .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
                 .show()
+        }
+        holder.goToUrl.setOnClickListener {
+            goToUrl(context, data!!.url)
         }
     }
 
@@ -79,6 +87,16 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
             Log.d("Status", "Update completed")
         } catch (e: Exception) {
             Log.d("Status", "There are some errors.")
+        }
+    }
+
+    fun goToUrl(context: FragmentActivity?, url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            context?.startActivity(intent)
+        } catch (e: Exception) {
+            Log.d("Status", "Maybe there is a url error")
         }
     }
 }
