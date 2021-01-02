@@ -21,6 +21,7 @@ import com.example.cs496_week1.fragments.RecyclerAdapter
 
 class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
     var cursor = cursor
+    private lateinit var rcAdapter: RecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +35,18 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         val add_button: ImageButton = view.findViewById(R.id.add_button)
+        rcAdapter = RecyclerAdapter(cursor)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = RecyclerAdapter(cursor)
+            adapter = rcAdapter
         }
         addButtonListener(add_button)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("sequence", "ContactFragment-onActivityResult")
+        rcAdapter.notifyDataSetChanged()
+        Log.d("sequence", "ContactFragment-onActivityResult123")
     }
 
     private fun addButtonListener(button: ImageButton) {

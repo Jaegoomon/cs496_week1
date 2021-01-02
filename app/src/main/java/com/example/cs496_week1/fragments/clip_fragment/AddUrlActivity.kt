@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cs496_week1.R
 import io.realm.Realm
@@ -32,12 +34,21 @@ class AddUrlActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             addClibDB()
-            finish()
         }
     }
 
     fun addClibDB() {
         try {
+            if (title.text.toString() == "" ) {
+                Toast.makeText(this@AddUrlActivity, "제목을 추가하세요.", LENGTH_SHORT).show()
+                Log.d("asdf", "You must write title")
+                return
+            }
+            if (url.text.toString() == "" ) {
+                Toast.makeText(this@AddUrlActivity, "주소를 추가하세요.", LENGTH_SHORT).show()
+                Log.d("asdf", "You must write url")
+                return
+            }
             val clipData = ClipData()
             val index: Number? = realm.where(ClipData::class.java).max("id")
             val nextId = if (index == null) {
@@ -53,6 +64,7 @@ class AddUrlActivity : AppCompatActivity() {
             realm.executeTransaction {
                 it.copyToRealm(clipData)
             }
+            finish()
 
             Log.d("Status", "New clib data added")
         } catch (e: Exception) {
