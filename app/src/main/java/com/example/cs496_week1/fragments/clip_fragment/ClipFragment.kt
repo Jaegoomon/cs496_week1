@@ -4,23 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cs496_week1.R
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
+
 
 class ClipFragment : Fragment() {
+    var moveX = 0f
+    var moveY = 0f
+
     lateinit var rcAdapter: RecyclerAdapterUrl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +57,19 @@ class ClipFragment : Fragment() {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddUrlActivity::class.java)
             startActivityForResult(intent, 1111)
+        }
+
+        button.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    moveX = v.x - event.rawX
+                    moveY = v.y -event.rawY
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    v.animate().x(event.rawX + moveX).y(event.rawY + moveY).setDuration(0).start()
+                }
+            }
+            false
         }
     }
 }
