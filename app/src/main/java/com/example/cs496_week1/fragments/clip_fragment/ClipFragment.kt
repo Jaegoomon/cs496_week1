@@ -19,6 +19,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class ClipFragment : Fragment() {
+    lateinit var rcAdapter: RecyclerAdapterUrl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,17 +38,24 @@ class ClipFragment : Fragment() {
 
         val add_button: ImageButton = view.findViewById(R.id.add_button)
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        addButtonListener(add_button)
+        rcAdapter = RecyclerAdapterUrl(view.context)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = RecyclerAdapterUrl(view.context)
+            adapter = rcAdapter
+            addButtonListener(add_button)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("asdf", "Got it")
+        rcAdapter.notifyDataSetChanged()
     }
 
     private fun addButtonListener(button: ImageButton) {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddUrlActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 1111)
         }
     }
 }

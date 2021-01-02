@@ -53,6 +53,7 @@ class AddUrlActivity : AppCompatActivity() {
             realm.executeTransaction {
                 it.copyToRealm(clipData)
             }
+
             Log.d("Status", "New clib data added")
         } catch (e: Exception) {
             Log.d("Status", "There are some errors")
