@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
@@ -40,7 +41,7 @@ class ClipFragment : Fragment() {
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         rcAdapter = RecyclerAdapterUrl(view.context)
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = GridLayoutManager(activity, 2)
             adapter = rcAdapter
             addButtonListener(add_button)
         }
