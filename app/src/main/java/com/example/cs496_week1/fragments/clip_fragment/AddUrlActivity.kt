@@ -49,8 +49,8 @@ class AddUrlActivity : AppCompatActivity() {
                 Log.d("asdf", "You must write url")
                 return
             }
-            val clipData = ClipData()
-            val index: Number? = realm.where(ClipData::class.java).max("id")
+            val clipData = ClipRealmData()
+            val index: Number? = realm.where(ClipRealmData::class.java).max("id")
             val nextId = if (index == null) {
                 0
             } else {

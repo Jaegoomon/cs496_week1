@@ -1,6 +1,9 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -10,8 +13,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
@@ -26,8 +30,10 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
         val itemTitle: TextView = itemView.findViewById(R.id.title)
         val itemContent: TextView = itemView.findViewById(R.id.content)
         val itemIndex: TextView = itemView.findViewById(R.id.index)
-        val deleteButton: ImageButton = itemView.findViewById(R.id.trash)
         val goToUrl: LinearLayout = itemView.findViewById(R.id.url_card)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.trash)
+        val editButton: ImageButton = itemView.findViewById(R.id.revice)
+        val copyButton: ImageButton = itemView.findViewById(R.id.copy)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,30 +44,42 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = realm.where(ClipData::class.java).equalTo("id", position).findFirst()
+        val data = realm.where(ClipRealmData::class.java).equalTo("id", position).findFirst()
         holder.itemTitle.setText(data!!.title)
         holder.itemContent.setText(data!!.content)
         holder.itemIndex.setText((data!!.id + 1).toString())
+
+        holder.goToUrl.setOnClickListener {
+            goToUrl(context, data!!.url)
+        }
+
         holder.deleteButton.setOnClickListener {
-            Log.d("Status", "Delete button was clicked")
             val index = holder.itemIndex.text.toString().toInt()
             AlertDialog.Builder(context).setTitle("삭제하시겠습니까?")
                 .setNegativeButton("아니오") { _, _ -> }
                 .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
                 .show()
         }
-        holder.goToUrl.setOnClickListener {
-            goToUrl(context, data!!.url)
+
+        holder.editButton.setOnClickListener {
+            Log.d("Status", "Edit button was clicked")
+        }
+
+        holder.copyButton.setOnClickListener {
+            val clipboardManager = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("url", data!!.url)
+            clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(context, "클립보드에 복사되었습니다.", LENGTH_SHORT).show()
         }
     }
 
     override fun getItemCount(): Int {
-        return realm.where(ClipData::class.java).findAll().size
+        return realm.where(ClipRealmData::class.java).findAll().size
     }
 
     fun deleteDB(index: Int) {
         try {
-            val data = realm.where(ClipData::class.java).equalTo("id", index).findFirst()
+            val data = realm.where(ClipRealmData::class.java).equalTo("id", index).findFirst()
             realm.executeTransaction {
                 data?.deleteFromRealm()
             }
@@ -78,7 +96,7 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
             val start = index + 1
             val end = this.itemCount
             for (i in start..end) {
-                val data = realm.where(ClipData::class.java).equalTo("id", i).findFirst()
+                val data = realm.where(ClipRealmData::class.java).equalTo("id", i).findFirst()
                 realm?.executeTransaction {
                     data?.id = i - 1
                 }
@@ -96,7 +114,7 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
             intent.data = Uri.parse(url)
             context?.startActivity(intent)
         } catch (e: Exception) {
-            Log.d("Status", "Maybe there is a url error")
+            Toast.makeText(context, "URL이 올바르지 않습니다.", LENGTH_SHORT).show()
         }
     }
 }
