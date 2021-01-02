@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cs496_week1.R
 import org.json.JSONException
 import org.json.JSONObject
@@ -41,7 +42,7 @@ class ClipFragment : Fragment() {
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         rcAdapter = RecyclerAdapterUrl(view.context)
         recycler_view.apply {
-            layoutManager = GridLayoutManager(activity, 2)
+            layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             adapter = rcAdapter
             addButtonListener(add_button)
         }
