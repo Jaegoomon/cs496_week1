@@ -39,7 +39,7 @@ class ClipFragment : Fragment() {
 
         val add_button: ImageButton = view.findViewById(R.id.add_button)
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        rcAdapter = RecyclerAdapterUrl(view.context)
+        rcAdapter = RecyclerAdapterUrl(activity)
         recycler_view.apply {
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             adapter = rcAdapter
@@ -50,7 +50,9 @@ class ClipFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("asdf", "Got it")
-        rcAdapter.notifyDataSetChanged()
+        if (requestCode == 1111) {
+            rcAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun addButtonListener(button: ImageButton) {
@@ -63,7 +65,7 @@ class ClipFragment : Fragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     moveX = v.x - event.rawX
-                    moveY = v.y -event.rawY
+                    moveY = v.y - event.rawY
                 }
                 MotionEvent.ACTION_MOVE -> {
                     v.animate().x(event.rawX + moveX).y(event.rawY + moveY).setDuration(0).start()

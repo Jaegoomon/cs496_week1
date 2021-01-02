@@ -1,27 +1,34 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
-import android.content.Context
+import android.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
 import io.realm.Realm
+import java.lang.Exception
 
-class RecyclerAdapterUrl(private val context: Context) :
+class RecyclerAdapterUrl(private val context: FragmentActivity?) :
     RecyclerView.Adapter<RecyclerAdapterUrl.ViewHolder>() {
     val realm = Realm.getDefaultInstance()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemTitle: TextView = itemView.findViewById(R.id.title)
         var itemContent: TextView = itemView.findViewById(R.id.content)
+        var itemIndex: TextView = itemView.findViewById(R.id.index)
+        var deleteButton: ImageButton = itemView.findViewById(R.id.trash)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_url_card_view, parent, false)
+        view.findViewById<CardView>(R.id.card)
         return ViewHolder(view)
     }
 
@@ -29,9 +36,49 @@ class RecyclerAdapterUrl(private val context: Context) :
         val data = realm.where(ClipData::class.java).equalTo("id", position).findFirst()
         holder.itemTitle.setText(data!!.title)
         holder.itemContent.setText(data!!.content)
+        holder.itemIndex.setText((data!!.id + 1).toString())
+        holder.deleteButton.setOnClickListener {
+            Log.d("Status", "Delete button was clicked")
+            val index = holder.itemIndex.text.toString().toInt()
+            AlertDialog.Builder(context).setTitle("삭제하시겠습니까?")
+                .setNegativeButton("아니오") { _, _ -> }
+                .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
+                .show()
+        }
     }
 
     override fun getItemCount(): Int {
         return realm.where(ClipData::class.java).findAll().size
+    }
+
+    fun deleteDB(index: Int) {
+        try {
+            val data = realm.where(ClipData::class.java).equalTo("id", index).findFirst()
+            realm.executeTransaction {
+                data?.deleteFromRealm()
+            }
+            this.updateDB(index)
+            this.notifyDataSetChanged()
+            Log.d("Status", "Deletion completed")
+        } catch (e: Exception) {
+            Log.d("Status", "There are some errors.")
+        }
+    }
+
+    fun updateDB(index: Int) {
+        try {
+            val start = index + 1
+            val end = this.itemCount
+            for (i in start..end) {
+                val data = realm.where(ClipData::class.java).equalTo("id", i).findFirst()
+                realm?.executeTransaction {
+                    data?.id = i - 1
+                }
+                Log.d("Status", "Update complete" + i)
+            }
+            Log.d("Status", "Update completed")
+        } catch (e: Exception) {
+            Log.d("Status", "There are some errors.")
+        }
     }
 }
