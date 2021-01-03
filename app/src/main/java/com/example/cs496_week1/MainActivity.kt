@@ -20,7 +20,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import io.realm.Realm
 
 class MainActivity : AppCompatActivity() {
-    private var realm: Realm? = null
     private val tabTextList = arrayListOf("연락처", "사진", "몰라")
     private val tabIconList = arrayListOf(
         R.drawable.ic_baseline_phone_24,
@@ -32,67 +31,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        when {
-            intent?.action == Intent.ACTION_SEND -> {
-                if ("text/plain" == intent.type) {
-                    var data = intent.getStringExtra(Intent.EXTRA_TEXT)
-                    if (data != null) {
-                        Log.d("receive data", data)
-                        defaultPage = 2
-                        val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
-                        intent.putExtra("url", data)
-                        data = null
-                        startActivityForResult(intent, 2222)
-                    }
-                }
-            }
-            else -> {
-                Log.d("receive data", "None")
-            }
-        }
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_CONTACTS
-            ) != PackageManager.PERMISSION_GRANTED || (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED)
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                111
-            )
-        } else {
-            readData()
-        }
+        Log.d("receive data", "onCreate")
+        readUrlData(intent)
+        checkPermission()
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        when {
-            intent?.action == Intent.ACTION_SEND -> {
-                if ("text/plain" == intent.type) {
-                    var data = intent.getStringExtra(Intent.EXTRA_TEXT)
-                    if (data != null) {
-                        Log.d("receive data", data)
-                        defaultPage = 2
-                        val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
-                        intent.putExtra("url", data)
-                        data = null
-                        startActivityForResult(intent, 2222)
-                    }
-                }
-            }
-            else -> {
-                Log.d("receive data", "None")
-            }
-        }
+        Log.d("receive data", "onNewIntent")
+        readUrlData(intent)
     }
 
     override fun onRequestPermissionsResult(
@@ -103,6 +50,13 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             readData()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 2222) {
+            finish()
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -169,7 +123,46 @@ class MainActivity : AppCompatActivity() {
         setUpTabs(contactData, photoData)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun readUrlData(intent: Intent?) {
+        when {
+            intent?.action == Intent.ACTION_SEND -> {
+                if ("text/plain" == intent.type) {
+                    var data = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    if (data != null) {
+                        Log.d("receive data", data)
+                        defaultPage = 2
+                        val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
+                        intent.putExtra("url", data)
+                        data = null
+                        startActivityForResult(intent, 2222)
+                    }
+                }
+            }
+            else -> {
+                Log.d("receive data", "None")
+            }
+        }
+    }
+
+    private fun checkPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED || (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                111
+            )
+        } else {
+            readData()
+        }
     }
 }
