@@ -1,8 +1,6 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
 import android.content.DialogInterface
-import android.content.Intent
-import android.icu.text.CaseMap
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -24,6 +22,7 @@ class AddUrlActivity : AppCompatActivity() {
     private lateinit var title: EditText
     private lateinit var content: EditText
     private lateinit var tag: TextView
+    private var id: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +39,18 @@ class AddUrlActivity : AppCompatActivity() {
 
         val intent = getIntent()
         val receiveData = intent.getStringExtra("url")
+        val receiveEditData = intent.getStringArrayListExtra("editData")
         if (receiveData != null) {
             url.setText(receiveData)
             Log.d("receive data", receiveData)
+        }
+
+        if (receiveEditData != null) {
+            title.setText(receiveEditData[0])
+            content.setText(receiveEditData[1])
+            url.setText(receiveEditData[2])
+            tag.setText(receiveEditData[3])
+            id = receiveEditData[4].toInt()
         }
 
         tag.setOnClickListener {
@@ -76,24 +84,27 @@ class AddUrlActivity : AppCompatActivity() {
                 return
             }
             val clipData = ClipRealmData()
-            val index: Number? = realm.where(ClipRealmData::class.java).max("id")
-            val nextId = if (index == null) {
-                0
+            var nextId: Int? = null
+            if (id != null) {
+                nextId = id
             } else {
-                index.toInt() + 1
+                val index: Number? = realm.where(ClipRealmData::class.java).max("id")
+                nextId = if (index == null) {
+                    0
+                } else {
+                    index.toInt() + 1
+                }
             }
-            clipData.id = nextId
+            clipData.id = nextId!!
             clipData.url = url.text.toString()
             clipData.title = title.text.toString()
             clipData.content = content.text.toString()
             clipData.tag = tag.text.toString()
 
             realm.executeTransaction {
-                it.copyToRealm(clipData)
+                it.copyToRealmOrUpdate(clipData)
             }
             finish()
-
-            Log.d("Status", "New clib data added")
         } catch (e: Exception) {
             Log.d("Status", "There are some errors")
         }

@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_photo_24,
         R.drawable.ic_paper_clip
     )
-    private var defaultPage = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]
         }.attach()
-        pager2.setCurrentItem(defaultPage)
     }
 
     private fun readData() {
@@ -130,10 +128,8 @@ class MainActivity : AppCompatActivity() {
                     var data = intent.getStringExtra(Intent.EXTRA_TEXT)
                     if (data != null) {
                         Log.d("receive data", data)
-                        defaultPage = 2
                         val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
                         intent.putExtra("url", data)
-                        data = null
                         startActivityForResult(intent, 2222)
                     }
                 }

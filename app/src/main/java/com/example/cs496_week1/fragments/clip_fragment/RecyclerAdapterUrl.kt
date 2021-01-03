@@ -22,7 +22,7 @@ import com.example.cs496_week1.R
 import io.realm.Realm
 import java.lang.Exception
 
-class RecyclerAdapterUrl(private val context: FragmentActivity?) :
+class RecyclerAdapterUrl(private val context: ClipFragment) :
     RecyclerView.Adapter<RecyclerAdapterUrl.ViewHolder>() {
     val realm = Realm.getDefaultInstance()
 
@@ -52,12 +52,12 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
         holder.itemTag.setText(data!!.tag)
 
         holder.goToUrl.setOnClickListener {
-            goToUrl(context, data!!.url)
+            goToUrl(context.activity, data!!.url)
         }
 
         holder.goToUrl.setOnLongClickListener {
             val index = holder.itemIndex.text.toString().toInt()
-            AlertDialog.Builder(context).setTitle("삭제하시겠습니까?")
+            AlertDialog.Builder(context.activity).setTitle("삭제하시겠습니까?")
                 .setNegativeButton("아니오") { _, _ -> }
                 .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
                 .show()
@@ -67,23 +67,33 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
 
         holder.shareButton.setOnClickListener {
             val sendIntent = Intent()
-            sendIntent.action= Intent.ACTION_SEND
+            sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(Intent.EXTRA_TEXT, data!!.url)
             sendIntent.type = "text/plain"
 
             val shareIntent = Intent.createChooser(sendIntent, null)
-            context?.startActivity(shareIntent)
+            context.startActivity(shareIntent)
         }
 
         holder.editButton.setOnClickListener {
             Log.d("Status", "Edit button was clicked")
+            val intent = Intent(context.activity, AddUrlActivity::class.java)
+            val editData = arrayListOf(
+                data!!.title,
+                data!!.content,
+                data!!.url,
+                data!!.tag,
+                data!!.id.toString()
+            )
+            context.onClickButton(intent, editData)
         }
 
         holder.copyButton.setOnClickListener {
-            val clipboardManager = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val clipboardManager =
+                context.activity?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clipData = ClipData.newPlainText("url", data!!.url)
             clipboardManager.setPrimaryClip(clipData)
-            Toast.makeText(context, "클립보드에 복사되었습니다.", LENGTH_SHORT).show()
+            Toast.makeText(context.activity, "클립보드에 복사되었습니다.", LENGTH_SHORT).show()
         }
     }
 

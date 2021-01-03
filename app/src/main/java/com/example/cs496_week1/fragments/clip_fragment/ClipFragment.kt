@@ -39,7 +39,7 @@ class ClipFragment : Fragment() {
 
         val add_button: ImageButton = view.findViewById(R.id.add_button)
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        rcAdapter = RecyclerAdapterUrl(activity)
+        rcAdapter = RecyclerAdapterUrl(this)
         recycler_view.apply {
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             adapter = rcAdapter
@@ -49,8 +49,8 @@ class ClipFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("asdf", "Got it")
-        if (requestCode == 1111) {
+        Log.d("asdf", "Got it dsfdsdfsd")
+        if (requestCode == 1111 || requestCode == 3333) {
             rcAdapter.notifyDataSetChanged()
         }
     }
@@ -73,5 +73,10 @@ class ClipFragment : Fragment() {
             }
             false
         }
+    }
+
+    fun onClickButton(intent: Intent, data: ArrayList<String>) {
+        intent.putStringArrayListExtra("editData", data)
+        startActivityForResult(intent, 3333)
     }
 }
