@@ -32,15 +32,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         when {
             intent?.action == Intent.ACTION_SEND -> {
                 if ("text/plain" == intent.type) {
-                    val data = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    var data = intent.getStringExtra(Intent.EXTRA_TEXT)
                     if (data != null) {
                         Log.d("receive data", data)
                         defaultPage = 2
                         val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
                         intent.putExtra("url", data)
+                        data = null
                         startActivityForResult(intent, 2222)
                     }
                 }
@@ -68,6 +70,28 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
             readData()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        when {
+            intent?.action == Intent.ACTION_SEND -> {
+                if ("text/plain" == intent.type) {
+                    var data = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    if (data != null) {
+                        Log.d("receive data", data)
+                        defaultPage = 2
+                        val intent = Intent(this@MainActivity, AddUrlActivity::class.java)
+                        intent.putExtra("url", data)
+                        data = null
+                        startActivityForResult(intent, 2222)
+                    }
+                }
+            }
+            else -> {
+                Log.d("receive data", "None")
+            }
         }
     }
 
