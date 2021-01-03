@@ -38,6 +38,13 @@ class AddUrlActivity : AppCompatActivity() {
         tag = findViewById(R.id.tag)
         val rawTagData = tag.text.toString()
 
+        val intent = getIntent()
+        val receiveData = intent.getStringExtra("url")
+        if (receiveData != null) {
+            url.setText(receiveData)
+            Log.d("receive data", receiveData)
+        }
+
         tag.setOnClickListener {
             AlertDialog.Builder(this@AddUrlActivity).setTitle("로고를 선택하세요.")
                 .setItems(R.array.TAG, DialogInterface.OnClickListener { dialog, which ->
@@ -49,16 +56,6 @@ class AddUrlActivity : AppCompatActivity() {
         button.setOnClickListener {
             addClibDB(rawTagData)
         }
-
-        //
-        val intent = getIntent()
-        val receiveDAta = intent.getStringExtra("url")
-        if (receiveDAta != null) {
-            url.setText(receiveDAta)
-            Log.d("receive data", receiveDAta)
-            finish()
-        }
-        //
     }
 
     fun addClibDB(rawTag: String) {

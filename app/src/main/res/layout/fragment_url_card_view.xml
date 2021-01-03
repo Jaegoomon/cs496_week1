@@ -107,11 +107,11 @@
                 android:background="@drawable/ic_baseline_content_copy_24" />
 
             <ImageButton
-                android:id="@+id/trash"
+                android:id="@+id/share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
-                android:background="@drawable/ic_baseline_restore_from_trash_24" />
+                android:background="@drawable/ic_baseline_share_24" />
         </LinearLayout>
 
     </LinearLayout>

@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //
         when {
             intent?.action == Intent.ACTION_SEND -> {
                 if ("text/plain" == intent.type) {
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("receive data", "None")
             }
         }
-        //
+
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_CONTACTS
@@ -64,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-
                 ),
                 111
             )

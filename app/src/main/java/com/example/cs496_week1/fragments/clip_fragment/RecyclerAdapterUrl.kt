@@ -31,7 +31,7 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
         val itemContent: TextView = itemView.findViewById(R.id.content)
         val itemIndex: TextView = itemView.findViewById(R.id.index)
         val goToUrl: LinearLayout = itemView.findViewById(R.id.url_card)
-        val deleteButton: ImageButton = itemView.findViewById(R.id.trash)
+        val shareButton: ImageButton = itemView.findViewById(R.id.share)
         val editButton: ImageButton = itemView.findViewById(R.id.revice)
         val copyButton: ImageButton = itemView.findViewById(R.id.copy)
         val itemTag: TextView = itemView.findViewById(R.id.tag)
@@ -55,12 +55,24 @@ class RecyclerAdapterUrl(private val context: FragmentActivity?) :
             goToUrl(context, data!!.url)
         }
 
-        holder.deleteButton.setOnClickListener {
+        holder.goToUrl.setOnLongClickListener {
             val index = holder.itemIndex.text.toString().toInt()
             AlertDialog.Builder(context).setTitle("삭제하시겠습니까?")
                 .setNegativeButton("아니오") { _, _ -> }
                 .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
                 .show()
+            Log.d("Status", "button was clicked long")
+            true
+        }
+
+        holder.shareButton.setOnClickListener {
+            val sendIntent = Intent()
+            sendIntent.action= Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, data!!.url)
+            sendIntent.type = "text/plain"
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            context?.startActivity(shareIntent)
         }
 
         holder.editButton.setOnClickListener {
