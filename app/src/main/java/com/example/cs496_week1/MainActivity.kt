@@ -12,12 +12,11 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.example.cs496_week1.fragments.adapters.ViewPageAdpater
+import com.example.cs496_week1.fragments.adapters.ViewPageAdapter
 import com.example.cs496_week1.fragments.clip_fragment.AddUrlActivity
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import io.realm.Realm
 
 class MainActivity : AppCompatActivity() {
     private val tabTextList = arrayListOf("연락처", "사진", "몰라")
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
 
-        pager2.adapter = ViewPageAdpater(this@MainActivity, cursor1, cursor2)
+        pager2.adapter = ViewPageAdapter(this@MainActivity, cursor1, cursor2)
         TabLayoutMediator(tabs, pager2) { tab, position ->
             tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]

@@ -11,10 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.example.cs496_week1.R
-import java.lang.Long.getLong
 
-class RecyclerAdapter(cursor: ArrayList<ContactInfo>) :
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
+    RecyclerView.Adapter<ContactRecyclerAdapter.ViewHolder>() {
 
     private var cursor = cursor
 

@@ -1,6 +1,5 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +19,7 @@ class ClipFragment : Fragment() {
     var moveX = 0f
     var moveY = 0f
 
-    lateinit var rcAdapter: RecyclerAdapterUrl
+    lateinit var rcAdapter: ClipRecyclerAdapterUrl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -39,7 +38,7 @@ class ClipFragment : Fragment() {
 
         val add_button: ImageButton = view.findViewById(R.id.add_button)
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        rcAdapter = RecyclerAdapterUrl(this)
+        rcAdapter = ClipRecyclerAdapterUrl(this)
         recycler_view.apply {
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             adapter = rcAdapter

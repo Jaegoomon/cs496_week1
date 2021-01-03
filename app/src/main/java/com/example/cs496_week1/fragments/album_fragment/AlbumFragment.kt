@@ -13,10 +13,6 @@ import com.example.cs496_week1.R
 class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private val cursor = cursor
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +24,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
         itemView.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = GridLayoutManager(activity, 3)
-            adapter = RecyclerAdapterImage(cursor)
+            adapter = AlbumRecyclerAdapter(cursor)
         }
     }
 }

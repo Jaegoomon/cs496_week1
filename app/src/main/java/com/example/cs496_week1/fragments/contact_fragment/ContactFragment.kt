@@ -1,7 +1,6 @@
 package com.example.cs496_week1.fragments.contact_fragment
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -10,18 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.core.app.ActivityCompat.finishAffinity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.MainActivity
 import com.example.cs496_week1.R
-import com.example.cs496_week1.fragments.RecyclerAdapter
+import com.example.cs496_week1.fragments.ContactRecyclerAdapter
 
 class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
     var cursor = cursor
-    private lateinit var rcAdapter: RecyclerAdapter
+    private lateinit var rcAdapter: ContactRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +32,7 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         val add_button: ImageButton = view.findViewById(R.id.add_button)
-        rcAdapter = RecyclerAdapter(cursor)
+        rcAdapter = ContactRecyclerAdapter(cursor)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = rcAdapter

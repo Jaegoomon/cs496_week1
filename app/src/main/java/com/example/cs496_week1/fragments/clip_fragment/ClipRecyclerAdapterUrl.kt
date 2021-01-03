@@ -22,8 +22,8 @@ import com.example.cs496_week1.R
 import io.realm.Realm
 import java.lang.Exception
 
-class RecyclerAdapterUrl(private val context: ClipFragment) :
-    RecyclerView.Adapter<RecyclerAdapterUrl.ViewHolder>() {
+class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
+    RecyclerView.Adapter<ClipRecyclerAdapterUrl.ViewHolder>() {
     val realm = Realm.getDefaultInstance()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

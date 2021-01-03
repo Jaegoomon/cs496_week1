@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cs496_week1.R
 
-class RecyclerAdapterImage(img: ArrayList<String>) :
-    RecyclerView.Adapter<RecyclerAdapterImage.ViewHolder>() {
+class AlbumRecyclerAdapter(img: ArrayList<String>) :
+    RecyclerView.Adapter<AlbumRecyclerAdapter.ViewHolder>() {
     private val img = img
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
