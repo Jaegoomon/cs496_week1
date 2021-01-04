@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -44,12 +46,18 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
         return ViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", position).findFirst()
         holder.itemTitle.setText(data!!.title)
         holder.itemContent.setText(data!!.content)
         holder.itemIndex.setText((data!!.trick_id + 1).toString())
         holder.itemTag.setText(data!!.tag)
+        val logo = context.resources.getDrawable(R.drawable.logo)
+        logo.setTint(
+            context.resources.obtainTypedArray(R.array.tag_color).getColor(data!!.tag_color, 0)
+        )
+        holder.itemTag.setBackground(logo)
 
         holder.goToUrl.setOnClickListener {
             goToUrl(context.activity, data!!.url)
@@ -84,7 +92,8 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
                 data!!.url,
                 data!!.tag,
                 data!!.id.toString(),
-                data!!.trick_id.toString()
+                data!!.trick_id.toString(),
+                data!!.tag_color.toString()
             )
             context.onClickButton(intent, editData)
         }

@@ -69,7 +69,7 @@
             android:background="@drawable/logo"
             android:gravity="center"
             android:text="Youtube"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="11dp"
             android:textStyle="bold" />
 

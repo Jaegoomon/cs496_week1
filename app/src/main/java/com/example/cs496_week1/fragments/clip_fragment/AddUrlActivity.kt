@@ -1,6 +1,8 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
 import android.content.DialogInterface
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cs496_week1.R
@@ -22,13 +25,18 @@ class AddUrlActivity : AppCompatActivity() {
     private lateinit var title: EditText
     private lateinit var content: EditText
     private lateinit var tag: TextView
+    private var tagColor: Int? = null
     private var true_id: Int? = null
     private var trick_id: Int? = null
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_url)
+
+        val colors = resources.obtainTypedArray(R.array.tag_color)
+        val logo = resources.getDrawable(R.drawable.logo)
 
         realm = Realm.getDefaultInstance()
         button = findViewById(R.id.certification)
@@ -37,6 +45,9 @@ class AddUrlActivity : AppCompatActivity() {
         content = findViewById(R.id.content)
         tag = findViewById(R.id.tag)
         val rawTagData = tag.text.toString()
+
+        logo.setTint(Color.GRAY)
+        tag.setBackground(logo)
 
         val intent = getIntent()
         // Sharing case
@@ -54,13 +65,19 @@ class AddUrlActivity : AppCompatActivity() {
             tag.setText(receiveEditData[3])
             true_id = receiveEditData[4].toInt()
             trick_id = receiveEditData[5].toInt()
+            logo.setTint(colors.getColor(receiveEditData[6].toInt(), 0))
+            tag.setBackground(logo)
         }
 
         tag.setOnClickListener {
             AlertDialog.Builder(this@AddUrlActivity).setTitle("로고를 선택하세요.")
                 .setItems(R.array.TAG, DialogInterface.OnClickListener { dialog, which ->
-                    val items = getResources().getStringArray(R.array.TAG)
+                    val items = resources.getStringArray(R.array.TAG)
+
+                    logo.setTint(colors.getColor(which, 0))
                     tag.setText(items[which])
+                    tag.setBackground(logo)
+                    tagColor = which
                 }).show()
         }
 
@@ -113,12 +130,14 @@ class AddUrlActivity : AppCompatActivity() {
                     trickIndex.toInt() + 1
                 }
             }
+
             clipData.id = nextId!!
             clipData.trick_id = nextTrickId!!
             clipData.url = url.text.toString()
             clipData.title = title.text.toString()
             clipData.content = content.text.toString()
             clipData.tag = tag.text.toString()
+            clipData.tag_color = tagColor!!
 
             realm.executeTransaction {
                 it.copyToRealmOrUpdate(clipData)
