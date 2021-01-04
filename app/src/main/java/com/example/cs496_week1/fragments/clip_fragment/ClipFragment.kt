@@ -3,10 +3,7 @@ package com.example.cs496_week1.fragments.clip_fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +26,7 @@ class ClipFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
@@ -77,5 +75,11 @@ class ClipFragment : Fragment() {
     fun onClickButton(intent: Intent, data: ArrayList<String>) {
         intent.putStringArrayListExtra("editData", data)
         startActivityForResult(intent, 3333)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.mainmenu, menu)
     }
 }

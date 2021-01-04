@@ -18,7 +18,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="bottom|center"
+        android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:background="@drawable/button_background"
         android:src="@drawable/ic_baseline_add_24" />
