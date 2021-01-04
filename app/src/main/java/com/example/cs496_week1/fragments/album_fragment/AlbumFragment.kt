@@ -2,8 +2,10 @@ package com.example.cs496_week1.fragments.album_fragment
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ComponentName
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -12,11 +14,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.ContactsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +28,7 @@ import com.example.cs496_week1.MainActivity
 import com.example.cs496_week1.R
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,10 +36,8 @@ import kotlin.collections.ArrayList
 
 class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private val cursor = cursor
-
-    val REQUEST_IMAGE_CAPTURE = 1  //카메라 사진 촬영 요청 코드 *임의로 값 입력
-    var currentPhotoPath : String = Environment.DIRECTORY_PICTURES  //문자열 형태의 사진 경로값 (초기값을 null로 시작하고 싶을 때 - lateinti var)
-    val REQUEST_IMAGE_PICK = 10
+    val REQUEST_TAKE_PHOTO = 1
+    lateinit var currentPhotoPath: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,28 +67,34 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     }
 
     private fun addContentfunc() {
-        var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Environment.getExternalStorageDirectory());
-        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(context!!.packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (e: IOException) {
+                    // Error occurred while creating the File
+                    Log.e("Status", "" + e)
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        context!!,
+                        "com.example.android.fileprovider",
+                        it
+                    )
+                    Log.d("Status", "" + photoURI)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
-            val bitmap : Bitmap
-            val file = Environment.getExternalStorageDirectory()
-            if(Build.VERSION.SDK_INT < 28){//안드로이드 9.0 보다 버전이 낮을 경우
-                bitmap = MediaStore.Images.Media.getBitmap(this.context!!.contentResolver, Uri.fromFile(file))
-            }else{//안드로이드 9.0 보다 버전이 높을 경우
-                val decode = ImageDecoder.createSource(
-                    this.context!!.contentResolver,
-                    Uri.fromFile(file)
-                )
-                bitmap = ImageDecoder.decodeBitmap(decode)
-            }
-            savePhoto(bitmap)
-        }
+        galleryAddPic()
     }
 
     private fun reStart() {
@@ -95,22 +104,27 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
         System.exit(0)
     }
 
-
-
-
-    //갤러리에 저장
-    private fun savePhoto(bitmap: Bitmap) {
-        //사진 폴더에 저장하기 위한 경로 선언
-        val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/"
-        val timestamp : String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val fileName = "${timestamp}.jpeg"
-        val folder = File(folderPath)
-        if(!folder.isDirectory){//해당 경로에 폴더가 존재하지
-            folder.mkdir() // make directory의 줄임말로 해당경로에 폴더 자동으로
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
         }
-        //실제적인 저장 처리
-        val out = FileOutputStream(folderPath + fileName)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-        Toast.makeText(this.context,"사진이 앨범에 저장되었습니다.",Toast.LENGTH_SHORT).show()
     }
+
+    private fun galleryAddPic() {
+        Log.d("Status", "galleryAddPic")
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            val f = File(currentPhotoPath)
+            mediaScanIntent.data = Uri.fromFile(f)
+            context!!.sendBroadcast(mediaScanIntent)
+            Log.d("Status", "" + f)
+        }
+    }
+
 }
