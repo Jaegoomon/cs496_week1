@@ -13,8 +13,6 @@ import com.example.cs496_week1.R
 
 
 class ClipFragment : Fragment() {
-    var moveX = 0f
-    var moveY = 0f
 
     lateinit var rcAdapter: ClipRecyclerAdapterUrl
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,19 +54,6 @@ class ClipFragment : Fragment() {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddUrlActivity::class.java)
             startActivityForResult(intent, 1111)
-        }
-
-        button.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    moveX = v.x - event.rawX
-                    moveY = v.y - event.rawY
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    v.animate().x(event.rawX + moveX).y(event.rawY + moveY).setDuration(0).start()
-                }
-            }
-            false
         }
     }
 
