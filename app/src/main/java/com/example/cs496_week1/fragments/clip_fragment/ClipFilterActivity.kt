@@ -19,7 +19,7 @@ class ClipFilterActivity : AppCompatActivity() {
         val label = intent.getStringExtra("tag_label")
         if (label != null) {
             val labelList = realm.where(ClipRealmData::class.java).equalTo("tag", label).findAll()
-            val rcAdapter = ClipRecyclerFilterAdapter(labelList, true)
+            val rcAdapter = ClipRecyclerFilterAdapter(this, labelList, true)
             rcView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             rcView.adapter = rcAdapter
             Log.d("Status", "Im here")

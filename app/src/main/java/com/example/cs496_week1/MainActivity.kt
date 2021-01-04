@@ -29,14 +29,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("receive data", "onCreate")
+        Log.d("Status", "onCreate")
         readUrlData(intent)
         checkPermission()
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        Log.d("receive data", "onNewIntent")
+        Log.d("Status", "onNewIntent")
         readUrlData(intent)
     }
 
@@ -52,9 +52,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("Status", "onActivityResult")
         if (requestCode == 2222) {
+            Log.d("Status", "finish!!")
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Status", "Destroy")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

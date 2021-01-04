@@ -124,6 +124,7 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
             updateDB(index)
             notifyDataSetChanged()
         } catch (e: Exception) {
+            Log.d("Status", "There are some errors")
         }
     }
 
@@ -138,6 +139,8 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
                 }
             }
         } catch (e: Exception) {
+            Log.d("Status", "There are some errors")
+            Log.d("Status", "There are some errors")
         }
     }
 
