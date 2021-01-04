@@ -69,6 +69,7 @@ class AddUrlActivity : AppCompatActivity() {
             trick_id = receiveEditData[5].toInt()
             logo.setTint(colors.getColor(receiveEditData[6].toInt(), 0))
             tag.background = logo
+            tagColor = receiveEditData[6].toInt()
         }
 
         tag.setOnClickListener {
@@ -132,6 +133,7 @@ class AddUrlActivity : AppCompatActivity() {
                 }
             }
 
+            Log.d("Status", "set true and trick id")
             clipData.id = nextId!!
             clipData.trick_id = nextTrickId!!
             clipData.url = url.text.toString()
@@ -145,7 +147,7 @@ class AddUrlActivity : AppCompatActivity() {
             }
             finish()
         } catch (e: Exception) {
-            Log.d("Status", "There are some errors")
+            Log.e("Status", "" + e)
         }
     }
 }

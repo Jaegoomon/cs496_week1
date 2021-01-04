@@ -84,20 +84,21 @@ class ClipRecyclerFilterAdapter(
             val shareIntent = Intent.createChooser(sendIntent, null)
             context.startActivity(shareIntent)
         }
-//        holder.editButton.setOnClickListener {
-//            Log.d("Status", "Edit button was clicked")
-//            val intent = Intent(context, AddUrlActivity::class.java)
-//            val editData = arrayListOf(
-//                clipData!!.title,
-//                clipData!!.content,
-//                clipData!!.url,
-//                clipData!!.tag,
-//                clipData!!.id.toString(),
-//                clipData!!.trick_id.toString(),
-//                clipData!!.tag_color.toString()
-//            )
-//            //context.onClickButton(intent, editData)
-//        }
+        holder.editButton.setOnClickListener {
+            Log.d("Status", "Edit button was clicked")
+            val intent = Intent(context, AddUrlActivity::class.java)
+            val editData = arrayListOf(
+                clipData!!.title,
+                clipData!!.content,
+                clipData!!.url,
+                clipData!!.tag,
+                clipData!!.id.toString(),
+                clipData!!.trick_id.toString(),
+                clipData!!.tag_color.toString()
+            )
+            intent.putExtra("editData", editData)
+            context.startActivity(intent)
+        }
         holder.copyButton.setOnClickListener {
             val clipboardManager =
                 context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -131,6 +132,7 @@ class ClipRecyclerFilterAdapter(
                 data?.deleteFromRealm()
             }
             updateDB(index)
+            realm.where(ClipRealmData::class.java).sort("trick_id")
         } catch (e: Exception) {
             Log.d("Status", "There are some errors")
         }
