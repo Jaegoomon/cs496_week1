@@ -1,13 +1,17 @@
 package com.example.cs496_week1.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.example.cs496_week1.R
@@ -19,13 +23,13 @@ class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemName: TextView
-        var itemStudentId: TextView
         var itemNumber: TextView
         var itemPhoto: ImageView
+        var itemCall: ImageButton = itemView.findViewById(R.id.call)
+        var itemMessage: ImageButton = itemView.findViewById(R.id.message)
 
         init {
             itemName = itemView.findViewById(R.id.name)
-            itemStudentId = itemView.findViewById(R.id.student_id)
             itemNumber = itemView.findViewById(R.id.phone_number)
             itemPhoto = itemView.findViewById(R.id.photo)
             itemView.setOnClickListener {
@@ -43,6 +47,22 @@ class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
                 )
                 itemView.context.startActivity(editIntent)
             }
+
+            itemCall.setOnClickListener {
+                var callIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cursor[adapterPosition].number))
+                itemView.context.startActivity(callIntent)
+            }
+            itemMessage.setOnClickListener {
+                var messageIntent = Intent(Intent.ACTION_VIEW)
+                messageIntent.setType("vnd.android-dir/mms-sms")
+                messageIntent.setData(Uri.parse("smsto:" + cursor[adapterPosition].number))
+                messageIntent.putExtra("sms_body", "")
+
+//                var imm: InputMethodManager = itemView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+
+                itemView.context.startActivity(messageIntent)
+            }
         }
     }
 
@@ -54,8 +74,7 @@ class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemName.text = cursor[position].name
-        holder.itemStudentId.text = cursor[position].number
-        holder.itemNumber.text = cursor[position].name
+        holder.itemNumber.text = cursor[position].number
         if (cursor[position].image != null) {
             holder.itemPhoto.setImageBitmap(cursor[position].image)
         } else {

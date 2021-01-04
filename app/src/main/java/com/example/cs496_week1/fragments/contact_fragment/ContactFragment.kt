@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -57,8 +58,10 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
     }
 
     private fun addContentfunc() {
-        val intent: Intent = Intent(activity, AddContactActivity::class.java)
-        startActivityForResult(intent, 1)
+        with(Intent(Intent.ACTION_INSERT)) {
+            this.setType(ContactsContract.RawContacts.CONTENT_TYPE)
+            startActivityForResult(this, 1)
+        }
     }
 
     private fun reStart() {
