@@ -38,6 +38,7 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="normal"
                     android:hint="제목"
                     android:textSize="24dp" />
 
@@ -46,6 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
+                    android:textStyle="normal"
                     android:hint="설명"
                     android:lines="3"
                     android:textSize="20dp" />
@@ -55,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
+                    android:textStyle="normal"
                     android:hint="URL"
                     android:lines="4"
                     android:textSize="20dp" />
