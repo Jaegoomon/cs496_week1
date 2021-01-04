@@ -7,6 +7,7 @@ open class ClipRealmData : RealmObject() {
     @PrimaryKey
     var id = 0
 
+    var trick_id = 0
     var url: String = ""
     var title: String = ""
     var content: String = ""

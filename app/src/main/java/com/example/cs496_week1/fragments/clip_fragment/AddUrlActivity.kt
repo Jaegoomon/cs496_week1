@@ -22,7 +22,8 @@ class AddUrlActivity : AppCompatActivity() {
     private lateinit var title: EditText
     private lateinit var content: EditText
     private lateinit var tag: TextView
-    private var id: Int? = null
+    private var true_id: Int? = null
+    private var trick_id: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,19 +39,21 @@ class AddUrlActivity : AppCompatActivity() {
         val rawTagData = tag.text.toString()
 
         val intent = getIntent()
+        // Sharing case
         val receiveData = intent.getStringExtra("url")
         val receiveEditData = intent.getStringArrayListExtra("editData")
         if (receiveData != null) {
             url.setText(receiveData)
             Log.d("receive data", receiveData)
         }
-
+        // Editing case
         if (receiveEditData != null) {
             title.setText(receiveEditData[0])
             content.setText(receiveEditData[1])
             url.setText(receiveEditData[2])
             tag.setText(receiveEditData[3])
-            id = receiveEditData[4].toInt()
+            true_id = receiveEditData[4].toInt()
+            trick_id = receiveEditData[5].toInt()
         }
 
         tag.setOnClickListener {
@@ -83,10 +86,14 @@ class AddUrlActivity : AppCompatActivity() {
                 Log.d("asdf", "You must write url")
                 return
             }
+
             val clipData = ClipRealmData()
             var nextId: Int? = null
-            if (id != null) {
-                nextId = id
+            var nextTrickId: Int? = null
+
+            // Setting true id
+            if (true_id != null) {
+                nextId = true_id
             } else {
                 val index: Number? = realm.where(ClipRealmData::class.java).max("id")
                 nextId = if (index == null) {
@@ -95,7 +102,19 @@ class AddUrlActivity : AppCompatActivity() {
                     index.toInt() + 1
                 }
             }
+            // Setting trick id
+            if (trick_id != null) {
+                nextTrickId = trick_id
+            } else {
+                val trickIndex: Number? = realm.where(ClipRealmData::class.java).max("trick_id")
+                nextTrickId = if (trickIndex == null) {
+                    0
+                } else {
+                    trickIndex.toInt() + 1
+                }
+            }
             clipData.id = nextId!!
+            clipData.trick_id = nextTrickId!!
             clipData.url = url.text.toString()
             clipData.title = title.text.toString()
             clipData.content = content.text.toString()

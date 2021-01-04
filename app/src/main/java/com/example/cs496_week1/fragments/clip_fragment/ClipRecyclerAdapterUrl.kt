@@ -45,10 +45,10 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = realm.where(ClipRealmData::class.java).equalTo("id", position).findFirst()
+        val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", position).findFirst()
         holder.itemTitle.setText(data!!.title)
         holder.itemContent.setText(data!!.content)
-        holder.itemIndex.setText((data!!.id + 1).toString())
+        holder.itemIndex.setText((data!!.trick_id + 1).toString())
         holder.itemTag.setText(data!!.tag)
 
         holder.goToUrl.setOnClickListener {
@@ -83,7 +83,8 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
                 data!!.content,
                 data!!.url,
                 data!!.tag,
-                data!!.id.toString()
+                data!!.id.toString(),
+                data!!.trick_id.toString()
             )
             context.onClickButton(intent, editData)
         }
@@ -103,12 +104,12 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
 
     fun deleteDB(index: Int) {
         try {
-            val data = realm.where(ClipRealmData::class.java).equalTo("id", index).findFirst()
+            val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", index).findFirst()
             realm.executeTransaction {
                 data?.deleteFromRealm()
             }
-            this.updateDB(index)
-            this.notifyDataSetChanged()
+            updateDB(index)
+            notifyDataSetChanged()
             Log.d("Status", "Deletion completed")
         } catch (e: Exception) {
             Log.d("Status", "There are some errors.")
@@ -120,9 +121,9 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
             val start = index + 1
             val end = this.itemCount
             for (i in start..end) {
-                val data = realm.where(ClipRealmData::class.java).equalTo("id", i).findFirst()
+                val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", i).findFirst()
                 realm?.executeTransaction {
-                    data?.id = i - 1
+                    data?.trick_id = i - 1
                 }
                 Log.d("Status", "Update complete" + i)
             }
