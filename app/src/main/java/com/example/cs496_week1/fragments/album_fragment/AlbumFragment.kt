@@ -114,6 +114,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
+            Log.d("Status", "" + absolutePath)
         }
     }
 
