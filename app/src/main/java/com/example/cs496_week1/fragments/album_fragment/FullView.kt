@@ -21,7 +21,7 @@ class FullView : AppCompatActivity() {
             }
         }
 
-        val viewPager: ViewPager = findViewById(R.id.full_pager)
+        val viewPager: CustomViewPager = findViewById(R.id.full_pager)
         val adapter = FullViewPagerAdapter(supportFragmentManager)
         adapter.updateFragment(fragments)
         viewPager.adapter = adapter
