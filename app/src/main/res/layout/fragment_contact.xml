@@ -8,14 +8,10 @@
     android:orientation="vertical"
     tools:context=".fragments.contact_fragment.ContactFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0px"
-        android:overScrollMode="never"
         android:clipToPadding="false"
         android:paddingBottom="90dp" />
 
