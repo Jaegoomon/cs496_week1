@@ -8,8 +8,13 @@ class RealmApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
-        val config =
-            RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().name("mydata.realm").build()
-        Realm.setDefaultConfiguration(config)
+        val config1 =
+            RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().name("mydata.realm")
+                .modules(ClipRealmData()).build()
+        Realm.setDefaultConfiguration(config1)
+
+        val config2 =
+            RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().name("tagdata.realm")
+                .modules(ClipRealmTagData()).build()
     }
 }
