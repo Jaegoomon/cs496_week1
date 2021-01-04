@@ -43,7 +43,6 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_url_card_view, parent, false)
-        view.findViewById<CardView>(R.id.card)
         return ViewHolder(view)
     }
 
@@ -103,6 +102,12 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
             val clipData = ClipData.newPlainText("url", data!!.url)
             clipboardManager.setPrimaryClip(clipData)
             Toast.makeText(context.activity, "클립보드에 복사되었습니다.", LENGTH_SHORT).show()
+        }
+        holder.itemTag.setOnClickListener {
+            val intent = Intent(context.activity, ClipFilterActivity::class.java)
+            val label = holder.itemTag.text
+            intent.putExtra("tag_label", label)
+            context.startActivity(intent)
         }
     }
 
