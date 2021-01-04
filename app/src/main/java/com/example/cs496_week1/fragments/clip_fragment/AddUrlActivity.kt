@@ -1,5 +1,6 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
@@ -30,6 +31,7 @@ class AddUrlActivity : AppCompatActivity() {
     private var trick_id: Int? = null
 
 
+    @SuppressLint("Recycle")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +49,9 @@ class AddUrlActivity : AppCompatActivity() {
         val rawTagData = tag.text.toString()
 
         logo.setTint(Color.GRAY)
-        tag.setBackground(logo)
+        tag.background = logo
 
-        val intent = getIntent()
+        val intent = intent
         // Sharing case
         val receiveData = intent.getStringExtra("url")
         val receiveEditData = intent.getStringArrayListExtra("editData")
@@ -66,17 +68,16 @@ class AddUrlActivity : AppCompatActivity() {
             true_id = receiveEditData[4].toInt()
             trick_id = receiveEditData[5].toInt()
             logo.setTint(colors.getColor(receiveEditData[6].toInt(), 0))
-            tag.setBackground(logo)
+            tag.background = logo
         }
 
         tag.setOnClickListener {
             AlertDialog.Builder(this@AddUrlActivity).setTitle("로고를 선택하세요.")
-                .setItems(R.array.TAG, DialogInterface.OnClickListener { dialog, which ->
-                    val items = resources.getStringArray(R.array.TAG)
-
+                .setItems(R.array.tag_name, DialogInterface.OnClickListener { dialog, which ->
+                    val items = resources.getStringArray(R.array.tag_name)
                     logo.setTint(colors.getColor(which, 0))
-                    tag.setText(items[which])
-                    tag.setBackground(logo)
+                    tag.text = items[which]
+                    tag.background = logo
                     tagColor = which
                 }).show()
         }
@@ -86,7 +87,7 @@ class AddUrlActivity : AppCompatActivity() {
         }
     }
 
-    fun addClibDB(rawTag: String) {
+    private fun addClibDB(rawTag: String) {
         try {
             if (title.text.toString() == "") {
                 Toast.makeText(this@AddUrlActivity, "제목을 추가하세요.", LENGTH_SHORT).show()

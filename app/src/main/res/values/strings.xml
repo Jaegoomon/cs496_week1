@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">cs496_week1</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="TAG">
+    <string-array name="tag_name">
         <item>"Youtube"</item>
         <item>"Meme"</item>
         <item>"News"</item>

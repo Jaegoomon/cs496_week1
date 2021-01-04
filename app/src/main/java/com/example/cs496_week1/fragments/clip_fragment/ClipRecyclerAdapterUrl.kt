@@ -1,5 +1,6 @@
 package com.example.cs496_week1.fragments.clip_fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -46,33 +47,33 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
         return ViewHolder(view)
     }
 
+    @SuppressLint("Recycle")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", position).findFirst()
-        holder.itemTitle.setText(data!!.title)
-        holder.itemContent.setText(data!!.content)
-        holder.itemIndex.setText((data!!.trick_id + 1).toString())
-        holder.itemTag.setText(data!!.tag)
+        holder.itemTitle.text = data!!.title
+        holder.itemContent.text = data!!.content
+        holder.itemIndex.text = (data!!.trick_id + 1).toString()
+        holder.itemTag.text = data!!.tag
+
         val logo = context.resources.getDrawable(R.drawable.logo)
         logo.setTint(
             context.resources.obtainTypedArray(R.array.tag_color).getColor(data!!.tag_color, 0)
         )
-        holder.itemTag.setBackground(logo)
+        holder.itemTag.background = logo
 
+        // click listener
         holder.goToUrl.setOnClickListener {
             goToUrl(context.activity, data!!.url)
         }
-
         holder.goToUrl.setOnLongClickListener {
             val index = holder.itemIndex.text.toString().toInt()
             AlertDialog.Builder(context.activity).setTitle("삭제하시겠습니까?")
                 .setNegativeButton("아니오") { _, _ -> }
                 .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
                 .show()
-            Log.d("Status", "button was clicked long")
             true
         }
-
         holder.shareButton.setOnClickListener {
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -82,7 +83,6 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
             val shareIntent = Intent.createChooser(sendIntent, null)
             context.startActivity(shareIntent)
         }
-
         holder.editButton.setOnClickListener {
             Log.d("Status", "Edit button was clicked")
             val intent = Intent(context.activity, AddUrlActivity::class.java)
@@ -97,7 +97,6 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
             )
             context.onClickButton(intent, editData)
         }
-
         holder.copyButton.setOnClickListener {
             val clipboardManager =
                 context.activity?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -111,7 +110,7 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
         return realm.where(ClipRealmData::class.java).findAll().size
     }
 
-    fun deleteDB(index: Int) {
+    private fun deleteDB(index: Int) {
         try {
             val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", index).findFirst()
             realm.executeTransaction {
@@ -119,13 +118,11 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
             }
             updateDB(index)
             notifyDataSetChanged()
-            Log.d("Status", "Deletion completed")
         } catch (e: Exception) {
-            Log.d("Status", "There are some errors.")
         }
     }
 
-    fun updateDB(index: Int) {
+    private fun updateDB(index: Int) {
         try {
             val start = index + 1
             val end = this.itemCount
@@ -134,15 +131,12 @@ class ClipRecyclerAdapterUrl(private val context: ClipFragment) :
                 realm?.executeTransaction {
                     data?.trick_id = i - 1
                 }
-                Log.d("Status", "Update complete" + i)
             }
-            Log.d("Status", "Update completed")
         } catch (e: Exception) {
-            Log.d("Status", "There are some errors.")
         }
     }
 
-    fun goToUrl(context: FragmentActivity?, url: String) {
+    private fun goToUrl(context: FragmentActivity?, url: String) {
         try {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
