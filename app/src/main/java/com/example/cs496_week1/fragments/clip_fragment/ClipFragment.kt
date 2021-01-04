@@ -26,7 +26,7 @@ class ClipFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        setHasOptionsMenu(true);
+        // setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
@@ -77,9 +77,8 @@ class ClipFragment : Fragment() {
         startActivityForResult(intent, 3333)
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.mainmenu, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//        inflater.inflate(R.menu.mainmenu, menu)
+//    }
 }
