@@ -69,6 +69,8 @@
                     android:background="@drawable/button_background"
                     android:src="@drawable/ic_baseline_call_24"
                     android:scaleType="fitCenter"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:adjustViewBounds="true"
                     android:backgroundTint="#28D330"/>
 
@@ -82,6 +84,8 @@
                     android:background="@drawable/button_background"
                     android:src="@drawable/ic_baseline_message_24"
                     android:scaleType="fitCenter"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="2dp"
                     android:adjustViewBounds="true"
                     android:backgroundTint="#FC9013"/>
             </LinearLayout>
