@@ -24,8 +24,6 @@ class ClipFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        // setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
@@ -49,7 +47,7 @@ class ClipFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("asdf", "Got it dsfdsdfsd")
+        Log.d("Status", "Got it dsfdsdfsd")
         if (requestCode == 1111 || requestCode == 3333) {
             rcAdapter.notifyDataSetChanged()
         }
@@ -61,14 +59,4 @@ class ClipFragment : Fragment() {
             startActivityForResult(intent, 1111)
         }
     }
-
-    fun onClickButton(intent: Intent, data: ArrayList<String>) {
-        intent.putStringArrayListExtra("editData", data)
-        startActivityForResult(intent, 3333)
-    }
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.mainmenu, menu)
-//    }
 }

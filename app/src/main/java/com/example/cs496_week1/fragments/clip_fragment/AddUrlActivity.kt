@@ -28,8 +28,6 @@ class AddUrlActivity : AppCompatActivity() {
     private lateinit var tag: TextView
     private var tagColor: Int? = null
     private var true_id: Int? = null
-    private var trick_id: Int? = null
-
 
     @SuppressLint("Recycle")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -66,10 +64,9 @@ class AddUrlActivity : AppCompatActivity() {
             url.setText(receiveEditData[2])
             tag.setText(receiveEditData[3])
             true_id = receiveEditData[4].toInt()
-            trick_id = receiveEditData[5].toInt()
-            logo.setTint(colors.getColor(receiveEditData[6].toInt(), 0))
+            logo.setTint(colors.getColor(receiveEditData[5].toInt(), 0))
             tag.background = logo
-            tagColor = receiveEditData[6].toInt()
+            tagColor = receiveEditData[5].toInt()
         }
 
         tag.setOnClickListener {
@@ -108,9 +105,6 @@ class AddUrlActivity : AppCompatActivity() {
 
             val clipData = ClipRealmData()
             var nextId: Int? = null
-            var nextTrickId: Int? = null
-
-            // Setting true id
             if (true_id != null) {
                 nextId = true_id
             } else {
@@ -121,21 +115,9 @@ class AddUrlActivity : AppCompatActivity() {
                     index.toInt() + 1
                 }
             }
-            // Setting trick id
-            if (trick_id != null) {
-                nextTrickId = trick_id
-            } else {
-                val trickIndex: Number? = realm.where(ClipRealmData::class.java).max("trick_id")
-                nextTrickId = if (trickIndex == null) {
-                    0
-                } else {
-                    trickIndex.toInt() + 1
-                }
-            }
 
             Log.d("Status", "set true and trick id")
             clipData.id = nextId!!
-            clipData.trick_id = nextTrickId!!
             clipData.url = url.text.toString()
             clipData.title = title.text.toString()
             clipData.content = content.text.toString()

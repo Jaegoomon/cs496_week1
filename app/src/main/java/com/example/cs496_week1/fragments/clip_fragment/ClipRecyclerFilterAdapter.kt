@@ -35,7 +35,6 @@ class ClipRecyclerFilterAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemTitle: TextView = itemView.findViewById(R.id.title)
         val itemContent: TextView = itemView.findViewById(R.id.content)
-        val itemIndex: TextView = itemView.findViewById(R.id.index)
         val goToUrl: LinearLayout = itemView.findViewById(R.id.url_card)
         val shareButton: ImageButton = itemView.findViewById(R.id.share)
         val editButton: ImageButton = itemView.findViewById(R.id.revice)
@@ -54,7 +53,6 @@ class ClipRecyclerFilterAdapter(
         val clipData = data?.get(position)
         holder.itemTitle.text = clipData!!.title
         holder.itemContent.text = clipData!!.content
-        holder.itemIndex.text = (clipData!!.trick_id + 1).toString()
         holder.itemTag.text = clipData!!.tag
 
         val logo = context.resources.getDrawable(R.drawable.logo)
@@ -68,10 +66,9 @@ class ClipRecyclerFilterAdapter(
             goToUrl(context, clipData!!.url)
         }
         holder.goToUrl.setOnLongClickListener {
-            val index = holder.itemIndex.text.toString().toInt()
             AlertDialog.Builder(context).setTitle("삭제하시겠습니까?")
                 .setNegativeButton("아니오") { _, _ -> }
-                .setPositiveButton("예") { _, _ -> deleteDB(index - 1) }
+                .setPositiveButton("예") { _, _ -> deleteDB(clipData) }
                 .show()
             true
         }
@@ -93,7 +90,6 @@ class ClipRecyclerFilterAdapter(
                 clipData!!.url,
                 clipData!!.tag,
                 clipData!!.id.toString(),
-                clipData!!.trick_id.toString(),
                 clipData!!.tag_color.toString()
             )
             intent.putExtra("editData", editData)
@@ -124,30 +120,11 @@ class ClipRecyclerFilterAdapter(
         }
     }
 
-    private fun deleteDB(index: Int) {
+    private fun deleteDB(data: ClipRealmData?) {
         try {
             val realm = Realm.getDefaultInstance()
-            val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", index).findFirst()
             realm.executeTransaction {
                 data?.deleteFromRealm()
-            }
-            updateDB(index)
-            realm.where(ClipRealmData::class.java).sort("trick_id")
-        } catch (e: Exception) {
-            Log.d("Status", "There are some errors")
-        }
-    }
-
-    private fun updateDB(index: Int) {
-        try {
-            val realm = Realm.getDefaultInstance()
-            val start = index + 1
-            val end = this.itemCount
-            for (i in start..end) {
-                val data = realm.where(ClipRealmData::class.java).equalTo("trick_id", i).findFirst()
-                realm?.executeTransaction {
-                    data?.trick_id = i - 1
-                }
             }
         } catch (e: Exception) {
             Log.d("Status", "There are some errors")
