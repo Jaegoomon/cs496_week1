@@ -49,7 +49,8 @@ class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
             }
 
             itemCall.setOnClickListener {
-                var callIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cursor[adapterPosition].number))
+                var callIntent =
+                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cursor[adapterPosition].number))
                 itemView.context.startActivity(callIntent)
             }
             itemMessage.setOnClickListener {
@@ -57,10 +58,6 @@ class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
                 messageIntent.setType("vnd.android-dir/mms-sms")
                 messageIntent.setData(Uri.parse("smsto:" + cursor[adapterPosition].number))
                 messageIntent.putExtra("sms_body", "")
-
-//                var imm: InputMethodManager = itemView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-
                 itemView.context.startActivity(messageIntent)
             }
         }

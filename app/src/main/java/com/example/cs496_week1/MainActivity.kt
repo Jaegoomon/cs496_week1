@@ -57,6 +57,11 @@ class MainActivity : AppCompatActivity() {
             Log.d("Status", "finish!!")
             finish()
         }
+
+        if (requestCode == 101) {
+            Log.d("Status", "onActivityResul request code 101")
+            readData()
+        }
     }
 
     override fun onDestroy() {
@@ -177,6 +182,13 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
             readData()
+        }
+    }
+
+    fun addContentfunc() {
+        with(Intent(Intent.ACTION_INSERT)) {
+            this.setType(ContactsContract.RawContacts.CONTENT_TYPE)
+            startActivityForResult(this, 101)
         }
     }
 }

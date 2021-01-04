@@ -52,17 +52,17 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
             AlertDialog.Builder(activity)
                 .setTitle("메뉴를 선택하세요")
                 .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
-                .setNegativeButton("연락처 추가") { dialogInterface: DialogInterface, i: Int -> addContentfunc() }
+                .setNegativeButton("연락처 추가") { dialogInterface: DialogInterface, i: Int -> (activity as MainActivity).addContentfunc() }
                 .show()
         }
     }
 
-    private fun addContentfunc() {
-        with(Intent(Intent.ACTION_INSERT)) {
-            this.setType(ContactsContract.RawContacts.CONTENT_TYPE)
-            startActivityForResult(this, 1)
-        }
-    }
+//    private fun addContentfunc() {
+//        with(Intent(Intent.ACTION_INSERT)) {
+//            this.setType(ContactsContract.RawContacts.CONTENT_TYPE)
+//            startActivityForResult(this, 1)
+//        }
+//    }
 
     private fun reStart() {
         activity?.finishAffinity()
