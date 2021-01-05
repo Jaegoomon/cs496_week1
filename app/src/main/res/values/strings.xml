@@ -2,18 +2,46 @@
     <string name="app_name">cs496_week1</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="tag_name">
-        <item>"Youtube"</item>
-        <item>"Meme"</item>
-        <item>"News"</item>
-        <item>"Shopping"</item>
+        <item>"라이프 스타일"</item>
+        <item>"음악/댄스"</item>
+        <item>"뷰티/패션"</item>
+        <item>"영화/애니메이션"</item>
+        <item>"게임"</item>
+        <item>"여행/아웃도어"</item>
+        <item>"스포츠/건강"</item>
+        <item>"뉴스/정치/이슈"</item>
+        <item>"기관/단체/정부"</item>
+        <item>"엔터테인먼트"</item>
+        <item>"푸드/쿠킹"</item>
+        <item>"인물/유명인"</item>
+        <item>"IT/기술/과학"</item>
+        <item>"동물/펫"</item>
+        <item>"취미"</item>
+        <item>"차/배/바이크"</item>
+        <item>"경제/금융/재테크"</item>
+        <item>"교육/강의"</item>
         <item>"Etc"</item>
     </string-array>
 
     <array name="tag_color">
         <item>#FF0000</item>
-        <item>#F9D129</item>
-        <item>#89E2C7</item>
-        <item>#00DBFF</item>
-        <item>#A997DF</item>
+        <item>#FC4700</item>
+        <item>#FC6600</item>
+        <item>#FFC107</item>
+        <item>#CDDC39</item>
+        <item>#7DCD00</item>
+        <item>#36B700</item>
+        <item>#009900</item>
+        <item>#008080</item>
+        <item>#006666</item>
+        <item>#009297</item>
+        <item>#0611F2</item>
+        <item>#003A9A</item>
+        <item>#00007E</item>
+        <item>#4D009A</item>
+        <item>#80007F</item>
+        <item>#770055</item>
+        <item>#E80074</item>
+        <item>#FF0066</item>
     </array>
 </resources>
