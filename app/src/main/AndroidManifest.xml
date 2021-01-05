@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cs496_week1">
         <activity android:name=".fragments.clip_fragment.ClipFilterActivity"></activity>
-        <activity android:name=".fragments.clip_fragment.AddUrlActivity" />
+        <activity android:name=".fragments.clip_fragment.AddUrlActivity"
+            android:theme="@style/Transparent" />
         <activity android:name=".fragments.contact_fragment.AddContactActivity" />
         <activity android:name=".fragments.album_fragment.FullView" />
         <activity
