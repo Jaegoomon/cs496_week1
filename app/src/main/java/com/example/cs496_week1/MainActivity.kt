@@ -23,7 +23,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
-    private val tabTextList = arrayListOf("연락처", "사진", "몰라")
+    private val tabTextList = arrayListOf("연락처", "사진", "링크")
     private val tabIconList = arrayListOf(
         R.drawable.ic_baseline_phone_24,
         R.drawable.ic_baseline_photo_24,
