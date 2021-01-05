@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdapter
 import com.example.cs496_week1.fragments.clip_fragment.AddUrlActivity
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_photo_24,
         R.drawable.ic_paper_clip
     )
+    var flag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
     }
 
+
     private fun setUpTabs(
         cursor1: ArrayList<ContactInfo>,
         cursor2: ArrayList<String>,
@@ -86,8 +89,64 @@ class MainActivity : AppCompatActivity() {
     ) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
+        val controller1: FloatingActionButton = findViewById(R.id.controller1)
+        val controller2: FloatingActionButton = findViewById(R.id.controller2)
+        val controller3: FloatingActionButton = findViewById(R.id.controller3)
 
-        pager2.adapter = ViewPageAdapter(this@MainActivity, cursor1, cursor2)
+        val adapter = ViewPageAdapter(this@MainActivity, cursor1, cursor2)
+        pager2.adapter = adapter
+        pager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> {
+                        controller1.show()
+                        controller2.hide()
+                        controller3.hide()
+                        flag = 0
+                        Log.d("page listener", "page1")
+                    }
+                    1 -> {
+                        controller1.hide()
+                        controller2.show()
+                        controller3.hide()
+                        flag = 1
+                        Log.d("page listener", "page2")
+                    }
+                    2 -> {
+                        controller1.hide()
+                        controller2.hide()
+                        controller3.show()
+                        flag = 2
+                        Log.d("page listener", "page3")
+                    }
+                    else -> {
+                        controller1.show()
+                        controller2.hide()
+                        flag = 0
+                        Log.d("page listener", "page1")
+                    }
+                }
+            }
+        })
+
+        controller1.setOnClickListener {
+            Log.d("Clicked", "1 is clicked")
+            addContentfunc()
+        }
+        controller2.setOnClickListener {
+            Log.d("Clicked", "2 is clicked")
+            addPicture {
+                adapter.fragment2.addContentfunc(this@MainActivity)
+            }
+
+        }
+        controller3.setOnClickListener {
+            Log.d("Clicked", "3 is clicked")
+            val intent: Intent = Intent(this@MainActivity, AddUrlActivity::class.java)
+            startActivity(intent)
+        }
+
         pager2.currentItem = defualtPage
         TabLayoutMediator(tabs, pager2) { tab, position ->
             tab.setIcon(tabIconList[position])

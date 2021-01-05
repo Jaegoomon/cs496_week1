@@ -14,13 +14,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.MainActivity
 import com.example.cs496_week1.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -44,7 +44,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         Log.d("Status", "Fragment onViewCreated")
-        val add_button: ImageButton = itemView.findViewById(R.id.add_button)
+        val add_button: FloatingActionButton = itemView.findViewById(R.id.add_button)
         itemView.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = GridLayoutManager(activity, 3)
             albumRecyclerAdapter = AlbumRecyclerAdapter(cursor)
@@ -53,18 +53,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
         addButtonListener(add_button)
     }
 
-    private fun addButtonListener(button: ImageButton) {
-//        button.setOnClickListener {
-//            AlertDialog.Builder(activity)
-//                .setTitle("메뉴를 선택하세요")
-//                .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
-//                .setNegativeButton("사진 촬영") { dialogInterface: DialogInterface, i: Int ->
-//                    (context as MainActivity).addPicture {
-//                        addContentfunc(it)
-//                    }
-//                }
-//                .show()
-//        }
+    private fun addButtonListener(button: FloatingActionButton) {
         button.setOnClickListener {
             (context as MainActivity).addPicture {
                 addContentfunc(it)
@@ -72,7 +61,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
         }
     }
 
-    private fun addContentfunc(context: Context?) {
+    fun addContentfunc(context: Context?) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(context!!.packageManager)?.also {
                 // Create the File where the photo should go

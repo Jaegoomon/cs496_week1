@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cs496_week1.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
 
 
@@ -31,7 +32,7 @@ class ClipFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val add_button: ImageButton = view.findViewById(R.id.add_button)
+        val add_button: FloatingActionButton = view.findViewById(R.id.add_button)
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         rcAdapter = ClipRecyclerFilterAdapter(
             context!!,
@@ -45,7 +46,7 @@ class ClipFragment : Fragment() {
         }
     }
 
-    private fun addButtonListener(button: ImageButton) {
+    private fun addButtonListener(button: FloatingActionButton) {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddUrlActivity::class.java)
             startActivity(intent)

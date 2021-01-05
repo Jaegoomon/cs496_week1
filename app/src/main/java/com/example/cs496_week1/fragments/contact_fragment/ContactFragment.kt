@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.MainActivity
 import com.example.cs496_week1.R
 import com.example.cs496_week1.fragments.ContactRecyclerAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
     var cursor = cursor
@@ -32,7 +33,7 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        val add_button: ImageButton = view.findViewById(R.id.add_button)
+        val add_button: FloatingActionButton = view.findViewById(R.id.add_button)
         rcAdapter = ContactRecyclerAdapter(context, cursor)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -47,14 +48,7 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         Log.d("sequence", "ContactFragment-onActivityResult123")
     }
 
-    private fun addButtonListener(button: ImageButton) {
-//        button.setOnClickListener {
-//            AlertDialog.Builder(activity)
-//                .setTitle("메뉴를 선택하세요")
-//                .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
-//                .setNegativeButton("연락처 추가") { dialogInterface: DialogInterface, i: Int -> (activity as MainActivity).addContentfunc() }
-//                .show()
-//        }
+    private fun addButtonListener(button: FloatingActionButton) {
         button.setOnClickListener {
             (activity as MainActivity).addContentfunc()
         }
