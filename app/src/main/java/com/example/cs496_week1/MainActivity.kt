@@ -4,12 +4,14 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdapter
@@ -190,5 +192,17 @@ class MainActivity : AppCompatActivity() {
             this.setType(ContactsContract.RawContacts.CONTENT_TYPE)
             startActivityForResult(this, 101)
         }
+    }
+
+    fun addViewContentfunc(cursor: ArrayList<ContactInfo>, position: Int) {
+        var selectedContactUri: Uri? = null
+        val editIntent = Intent(Intent.ACTION_VIEW).apply {
+            selectedContactUri = ContactsContract.Contacts.getLookupUri(
+                cursor[position].id.toLong(),
+                cursor[position].lookup
+            )
+        }
+        editIntent.setDataAndType(selectedContactUri, ContactsContract.Contacts.CONTENT_ITEM_TYPE)
+        startActivityForResult(editIntent, 101)
     }
 }

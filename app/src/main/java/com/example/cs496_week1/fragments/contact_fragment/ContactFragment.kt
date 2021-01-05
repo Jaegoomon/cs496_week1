@@ -33,7 +33,7 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         val add_button: ImageButton = view.findViewById(R.id.add_button)
-        rcAdapter = ContactRecyclerAdapter(cursor)
+        rcAdapter = ContactRecyclerAdapter(context, cursor)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = rcAdapter
@@ -56,13 +56,6 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
                 .show()
         }
     }
-
-//    private fun addContentfunc() {
-//        with(Intent(Intent.ACTION_INSERT)) {
-//            this.setType(ContactsContract.RawContacts.CONTENT_TYPE)
-//            startActivityForResult(this, 1)
-//        }
-//    }
 
     private fun reStart() {
         activity?.finishAffinity()

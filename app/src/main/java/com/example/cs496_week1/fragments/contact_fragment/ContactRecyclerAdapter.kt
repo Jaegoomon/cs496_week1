@@ -13,12 +13,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cs496_week1.MainActivity
 import com.example.cs496_week1.fragments.contact_fragment.ContactInfo
 import com.example.cs496_week1.R
 
-class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
+class ContactRecyclerAdapter(context: Context?, cursor: ArrayList<ContactInfo>) :
     RecyclerView.Adapter<ContactRecyclerAdapter.ViewHolder>() {
 
+    private var context = context
     private var cursor = cursor
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,19 +35,7 @@ class ContactRecyclerAdapter(cursor: ArrayList<ContactInfo>) :
             itemNumber = itemView.findViewById(R.id.phone_number)
             itemPhoto = itemView.findViewById(R.id.photo)
             itemView.setOnClickListener {
-                var selectedContactUri: Uri? = null
-                val position: Int = adapterPosition
-                val editIntent = Intent(Intent.ACTION_VIEW).apply {
-                    selectedContactUri = ContactsContract.Contacts.getLookupUri(
-                        cursor[position].id.toLong(),
-                        cursor[position].lookup
-                    )
-                }
-                editIntent.setDataAndType(
-                    selectedContactUri,
-                    ContactsContract.Contacts.CONTENT_ITEM_TYPE
-                )
-                itemView.context.startActivity(editIntent)
+                (context as MainActivity).addViewContentfunc(cursor, adapterPosition)
             }
 
             itemCall.setOnClickListener {
