@@ -8,21 +8,23 @@
 * Tab2: 갤러리 앱으로 Tab1과 마찬가지로 스마트폰 내의 갤러리 앱의 사진 URI를 불러와 리사이클러뷰를 이용해 뷰를 그려준다.
 * Tab3: 웹 주소를 북마크하여 간단한 메모와 태그를 남길 수 있는 앱으로 구글 플레이스토어에 있는 ***[LinKeep](https://play.google.com/store/apps/details?id=com.francescopennella.linkeep)***의 기능을 가능한 비슷하게 구현하였다.
 
+
+
 ## Demo
 
 #### Tab1: Contacts
 
 첫번째 탭은 스마트본에 있는 연락처 정보를 가져와서 보여주는 기능으로 리사이클러뷰를 이용하여 리스트 형식으로 전화번호 데이터를 순서대로 나열하였다. 
 
-![contact]()
+![contact](https://raw.githubusercontent.com/Jaegoomon/cs496_week1/master/demo_source/contact_card.png)
 
 위의 보이는 사진이 가장 기본이 되는 주소록 뷰홀더이며 다음과 같은 기능을 가지로 있다.
 
 * 뷰: 전화번호에 해당하느 주소록 데이터로 이동할 수 있다. 
-* 전화 버튼: 클릭시 통화 화면으로 이동한다(통화 x).
+* 전화 버튼: 클릭시 통화 화면으로 이동한다.(통화 x)
 * 문자 번튼: 클릭시 문자 화면을 이동한다.
 
-
+![contact_demo1](https://raw.githubusercontent.com/Jaegoomon/cs496_week1/master/demo_source/demo1.gif) ![](https://raw.githubusercontent.com/Jaegoomon/cs496_week1/master/demo_source/demo2.gif)
 
 
 
@@ -36,7 +38,7 @@
 
 세번째 탭은 웹서핑을 하거나, 자주 들어가는 사이트에 대해서 메모와 동시에 북마크를 저장해 놓는 기능을 가지는 앱을 구현해 보았다. 
 
-![urlcard]()
+![urlcard](https://raw.githubusercontent.com/Jaegoomon/cs496_week1/master/demo_source/url_card.png)
 
 * 뷰: 클릭시 저장해 놓은 데이터로 이동이 가능하다.
 * 태그버튼: 해당 태그에 해당하는 뷰를 만들어 보여주는 기능을 한다.
@@ -82,7 +84,55 @@
 
   ![realm_img](https://avatars1.githubusercontent.com/u/7575099?s=200&v=4)
 
+  SQLite와 같이 안드로이드 내에서 지원하는 데이터 베이스도 있지만 세번째 탭에서 `Realm`을 사용한 것은 사용법이 상당히 용이한데 있었다. 세번째 탭을 구현하면서 `Realm`이 주었던 장점을 나열해 보았다. 다른 데이터 베이스에 대한 깊은 지식이 없기 때문에 이번 프로젝트를 진행하는 동안 느꼈던 필자의 생각이 주를 이루고 있음을 참고했으면 한다.
+
+  
+
+  1. 데이터 베이스 빌딩이 매우 쉽다.
+
+  `Realm`을 사용하면서 가장 매력적이었던 점중에 하나였던 것은 클래스를 통해 데이터 베이스의 Primary key와 데이터의 프로퍼티(column)을 정의하는 것이 매우 직관적이 었다.
+
+  ```kotlin
+  open class ClipRealmData : RealmObject() {
+      @PrimaryKey
+      var id = 0
+      var url: String = ""
+      var title: String = ""
+      var content: String = ""
+      var tag: String = ""
+      var tagColor: Int = 0
+  }
+  ```
+
+  위와 같이 `PrimaryKey`와 각 데이터 베이스에 들어갈 요소들을 직관적으로 정의할 수 있다. 
+
+  2. `RealmRecycler View`
+
+  무엇보다 가장 좋았던  `Realm`의 기능이었다. 주로 이번 프로젝트를 하면서 삭제와 추가를 구현하는 일이 생기는 상황에서는 프래그먼트를 새롭게 갱신하는 방법이나 `RecyclerAdapter.notifySetDataChanged()` 함수를 자주 자용하는 일이 많았는데, 세번째 탭에서 `Realm` 데이터 베이스와 리사이클러 뷰를 연동함으로써 삭제 혹은 수정과 같은 이벤트를 처리할 때, 자동으로 `Realm`의 변화를 인지하고 리사이클러뷰를 갱신해주었다. 삭제, 추가에 따른 requestCode와 resultCode를 처리하지 않아도 되었기 때문에 매우 편리하면서도 적은 양의 코드로 리사이클러뷰 구현이 가능하였다.
+
+  3. 데이터 베이스 가시화
+
+  직접적으로 사용한 기능은 아니었지만 데이터 베이스를 초기화하고 데이터 추가 삭제에 대한 디버깅을 할때 [RealmStudio](https://docs.realm.io/sync/realm-studio)를 활용하여 데이터 베이스의 작동 여부를 확인할 수 있었다. 데이터 베이스를 반응적으로 보여주지는 못하지만(찾지 못하였다.) 처음 데이터 베이스에 대한 디버깅을 할때 지관적으로 이해를 하는데 많은 도움이 되었다.
+
+  
+
 ## Discussion
 
-## Reference
+#### 파일 저장 딜레이
+
+
+
+#### 데이터 베이스 탭 추가
+
+
+
+#### 유동적으로 퍼미션 받기
+
+
+
+
+
+
+
+
 
