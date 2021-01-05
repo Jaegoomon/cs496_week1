@@ -25,7 +25,7 @@ const val GRANTED = PackageManager.PERMISSION_GRANTED
 class MainActivity : AppCompatActivity() {
     private val tabTextList = arrayListOf("연락처", "사진", "링크")
     private val tabIconList = arrayListOf(
-        R.drawable.ic_baseline_phone_24,
+        R.drawable.ic_baseline_call_24,
         R.drawable.ic_baseline_photo_24,
         R.drawable.ic_paper_clip
     )
