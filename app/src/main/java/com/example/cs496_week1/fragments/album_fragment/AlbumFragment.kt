@@ -26,9 +26,9 @@ import kotlin.collections.ArrayList
 
 class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private val cursor = cursor
-    val REQUEST_TAKE_PHOTO = 1
-    lateinit var currentPhotoPath: String
-    lateinit var albumRecyclerAdapter: AlbumRecyclerAdapter
+    private val REQUEST_TAKE_PHOTO = 1
+    private lateinit var currentPhotoPath: String
+    private lateinit var albumRecyclerAdapter: AlbumRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,13 +40,11 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         Log.d("Status", "Fragment onViewCreated")
-//        val add_button: FloatingActionButton = itemView.findViewById(R.id.add_button)
         itemView.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = GridLayoutManager(activity, 3)
             albumRecyclerAdapter = AlbumRecyclerAdapter(cursor)
             adapter = albumRecyclerAdapter
         }
-//        addButtonListener(add_button)
     }
 
     private fun addButtonListener(button: FloatingActionButton) {
@@ -101,7 +99,6 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        //val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val storageDir: File =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         Log.d("Status", "storage dir: " + storageDir.toString())

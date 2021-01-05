@@ -17,9 +17,9 @@ class ViewPageAdapter(
     cursor2: ArrayList<String>
 ) :
     FragmentStateAdapter(fragmentActivity) {
-    val fragment1 = ContactFragment(cursor1)
+    private val fragment1 = ContactFragment(cursor1)
     val fragment2 = AlbumFragment(cursor2)
-    val fragment3 = ClipFragment()
+    private val fragment3 = ClipFragment()
 
     override fun getItemCount(): Int {
         return 3

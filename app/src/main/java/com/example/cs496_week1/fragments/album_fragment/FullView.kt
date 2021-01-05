@@ -25,9 +25,6 @@ class FullView : AppCompatActivity() {
         val adapter = FullViewPagerAdapter(supportFragmentManager)
         adapter.updateFragment(fragments)
         viewPager.adapter = adapter
-//        val viewPager: ViewPager2 = findViewById(R.id.full_pager)
-//        val adapter = FullViewPageAdapter2(this@FullView, fragments)
-//        viewPager.adapter = adapter
         viewPager.currentItem = position
     }
 }

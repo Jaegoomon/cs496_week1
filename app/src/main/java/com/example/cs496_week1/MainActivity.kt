@@ -5,14 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_week1.fragments.adapters.ViewPageAdapter
@@ -22,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
+const val GRANTED = PackageManager.PERMISSION_GRANTED
+
 class MainActivity : AppCompatActivity() {
     private val tabTextList = arrayListOf("연락처", "사진", "링크")
     private val tabIconList = arrayListOf(
@@ -29,7 +29,20 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_photo_24,
         R.drawable.ic_paper_clip
     )
-    var flag = 0
+    private val permissionList = arrayOf(
+        Manifest.permission.READ_CONTACTS,
+        Manifest.permission.SEND_SMS,
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+    private val contactColumn = arrayOf(
+        ContactsContract.CommonDataKinds.Phone.PHOTO_URI,
+        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+        ContactsContract.CommonDataKinds.Phone.NUMBER,
+        ContactsContract.CommonDataKinds.Phone._ID,
+        ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        if (requestCode == 111 && grantResults[0] == GRANTED)
             readData()
     }
 
@@ -59,12 +72,10 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("Status", "onActivityResult")
         if (requestCode == 2222) {
-            Log.d("Status", "finish!!")
             finish()
         }
         if (requestCode == 101) {
             Thread.sleep(200)
-            Log.d("Status", "onActivityResul request code 101")
             readData()
             return
         }
@@ -72,15 +83,9 @@ class MainActivity : AppCompatActivity() {
         readData(1)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Status", "Destroy")
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
     }
-
 
     private fun setUpTabs(
         cursor1: ArrayList<ContactInfo>,
@@ -103,28 +108,24 @@ class MainActivity : AppCompatActivity() {
                         controller1.show()
                         controller2.hide()
                         controller3.hide()
-                        flag = 0
                         Log.d("page listener", "page1")
                     }
                     1 -> {
                         controller1.hide()
                         controller2.show()
                         controller3.hide()
-                        flag = 1
                         Log.d("page listener", "page2")
                     }
                     2 -> {
                         controller1.hide()
                         controller2.hide()
                         controller3.show()
-                        flag = 2
                         Log.d("page listener", "page3")
                     }
                     else -> {
                         controller1.show()
                         controller2.hide()
                         controller3.hide()
-                        flag = 0
                         Log.d("page listener", "page1")
                     }
                 }
@@ -173,17 +174,12 @@ class MainActivity : AppCompatActivity() {
         )
         if (result != null) {
             while (result.moveToNext()) {
-                val photo =
-                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI))
+                val photo = result.getString(result.getColumnIndex(contactColumn[0]))
                 val obj = ContactInfo()
-                obj.name =
-                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                obj.number =
-                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                obj.id =
-                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
-                obj.lookup =
-                    result.getString(result.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY))
+                obj.name = result.getString(result.getColumnIndex(contactColumn[1]))
+                obj.number = result.getString(result.getColumnIndex(contactColumn[2]))
+                obj.id = result.getString(result.getColumnIndex(contactColumn[3]))
+                obj.lookup = result.getString(result.getColumnIndex(contactColumn[4]))
                 if (photo != null) {
                     obj.image = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(photo))
                 }
@@ -203,8 +199,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readUrlData(intent: Intent?, defaultPage: Int = 0) {
-        when {
-            intent?.action == Intent.ACTION_SEND -> {
+        when (intent?.action) {
+            Intent.ACTION_SEND -> {
                 if ("text/plain" == intent.type) {
                     var data = intent.getStringExtra(Intent.EXTRA_TEXT)
                     if (data != null) {
@@ -222,34 +218,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermission() {
-        if (ActivityCompat.checkSelfPermission(
+        if (ActivityCompat.checkSelfPermission(this,
+                permissionList[0]
+            ) != GRANTED || (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.READ_CONTACTS
-            ) != PackageManager.PERMISSION_GRANTED || (ActivityCompat.checkSelfPermission(
+                permissionList[1]
+            ) != GRANTED) || (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.SEND_SMS
-            ) != PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(
+                permissionList[2]
+            ) != GRANTED) || (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(
+                permissionList[3]
+            ) != GRANTED) || (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED)
+                permissionList[4]
+            ) != GRANTED)
         ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                111
-            )
+            ActivityCompat.requestPermissions(this, permissionList, 111)
         } else {
             readData()
         }
