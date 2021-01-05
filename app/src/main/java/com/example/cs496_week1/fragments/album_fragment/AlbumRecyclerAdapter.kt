@@ -11,14 +11,14 @@ import com.example.cs496_week1.R
 
 class AlbumRecyclerAdapter(img: ArrayList<String>) :
     RecyclerView.Adapter<AlbumRecyclerAdapter.ViewHolder>() {
-    private val img = img
+    var img = img
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemImg: ImageView
         init {
             itemImg = itemView.findViewById(R.id.thumbImage)
             itemView.setOnClickListener {
-                val position: Int = getAdapterPosition()
+                val position: Int = adapterPosition
                 val context = itemView.context
                 val intent = Intent(context, FullView::class.java).apply {
                     putExtra("position", position)

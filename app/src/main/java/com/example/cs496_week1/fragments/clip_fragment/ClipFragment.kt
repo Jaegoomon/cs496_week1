@@ -45,18 +45,10 @@ class ClipFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.d("Status", "Got it dsfdsdfsd")
-        if (requestCode == 1111 || requestCode == 3333) {
-            rcAdapter.notifyDataSetChanged()
-        }
-    }
-
     private fun addButtonListener(button: ImageButton) {
         button.setOnClickListener {
             val intent: Intent = Intent(activity, AddUrlActivity::class.java)
-            startActivityForResult(intent, 1111)
+            startActivity(intent)
         }
     }
 }

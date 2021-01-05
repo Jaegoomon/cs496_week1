@@ -2,8 +2,10 @@ package com.example.cs496_week1.fragments.album_fragment
 
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -30,6 +32,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private val cursor = cursor
     val REQUEST_TAKE_PHOTO = 1
     lateinit var currentPhotoPath: String
+    lateinit var albumRecyclerAdapter: AlbumRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +43,12 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+        Log.d("Status", "Fragment onViewCreated")
         val add_button: ImageButton = itemView.findViewById(R.id.add_button)
         itemView.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = GridLayoutManager(activity, 3)
-            adapter = AlbumRecyclerAdapter(cursor)
+            albumRecyclerAdapter = AlbumRecyclerAdapter(cursor)
+            adapter = albumRecyclerAdapter
         }
         addButtonListener(add_button)
     }
@@ -53,12 +58,16 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
             AlertDialog.Builder(activity)
                 .setTitle("메뉴를 선택하세요")
                 .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
-                .setNegativeButton("사진 촬영") { dialogInterface: DialogInterface, i: Int -> addContentfunc() }
+                .setNegativeButton("사진 촬영") { dialogInterface: DialogInterface, i: Int ->
+                    (context as MainActivity).addPicture {
+                        addContentfunc(it)
+                    }
+                }
                 .show()
         }
     }
 
-    private fun addContentfunc() {
+    private fun addContentfunc(context: Context?) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(context!!.packageManager)?.also {
                 // Create the File where the photo should go
@@ -87,7 +96,9 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("Status", "Fragment onActivityResult")
         galleryAddPic()
+        updateData()
     }
 
     private fun reStart() {
@@ -101,7 +112,8 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         //val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val storageDir: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val storageDir: File =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         Log.d("Status", "storage dir: " + storageDir.toString())
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
@@ -120,5 +132,26 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
             mediaScanIntent.data = Uri.fromFile(f)
             context!!.sendBroadcast(mediaScanIntent)
         }
+    }
+
+    private fun updateData() {
+        Log.d("Status", "update phto data")
+        val photoData = ArrayList<String>()
+        val photo = context!!.contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            null,
+            null,
+            null,
+            MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
+        )
+        if (photo != null) {
+            while (photo.moveToNext()) {
+                val uri = photo.getString(photo.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+                photoData.add(uri)
+            }
+            photo.close()
+        }
+        albumRecyclerAdapter.img = photoData
+        albumRecyclerAdapter.notifyDataSetChanged()
     }
 }

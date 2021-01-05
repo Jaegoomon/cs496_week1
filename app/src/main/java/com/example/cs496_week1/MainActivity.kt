@@ -1,6 +1,7 @@
 package com.example.cs496_week1
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -59,11 +60,14 @@ class MainActivity : AppCompatActivity() {
             Log.d("Status", "finish!!")
             finish()
         }
-
         if (requestCode == 101) {
+            Thread.sleep(100)
             Log.d("Status", "onActivityResul request code 101")
             readData()
+            return
         }
+        Thread.sleep(100)
+        readData(1)
     }
 
     override fun onDestroy() {
@@ -75,18 +79,23 @@ class MainActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
     }
 
-    private fun setUpTabs(cursor1: ArrayList<ContactInfo>, cursor2: ArrayList<String>) {
+    private fun setUpTabs(
+        cursor1: ArrayList<ContactInfo>,
+        cursor2: ArrayList<String>,
+        defualtPage: Int = 0
+    ) {
         val pager2: ViewPager2 = findViewById(R.id.viewPager2)
         val tabs: TabLayout = findViewById(R.id.tabs)
 
         pager2.adapter = ViewPageAdapter(this@MainActivity, cursor1, cursor2)
+        pager2.currentItem = defualtPage
         TabLayoutMediator(tabs, pager2) { tab, position ->
             tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]
         }.attach()
     }
 
-    private fun readData() {
+    private fun readData(defualtPage: Int = 0) {
         val contactData = arrayListOf<ContactInfo>()
         val photoData = arrayListOf<String>()
         val result = contentResolver.query(
@@ -101,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             null,
             null,
             null,
-            null
+            MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
         )
         if (result != null) {
             while (result.moveToNext()) {
@@ -131,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             }
             photo.close()
         }
-        setUpTabs(contactData, photoData)
+        setUpTabs(contactData, photoData, defualtPage)
     }
 
     private fun readUrlData(intent: Intent?) {
@@ -204,5 +213,9 @@ class MainActivity : AppCompatActivity() {
         }
         editIntent.setDataAndType(selectedContactUri, ContactsContract.Contacts.CONTENT_ITEM_TYPE)
         startActivityForResult(editIntent, 101)
+    }
+
+    fun addPicture(f: (Context) -> Unit) {
+        f(this)
     }
 }
