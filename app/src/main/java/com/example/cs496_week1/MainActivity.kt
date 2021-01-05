@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("Status", "onActivityResult")
         if (requestCode == 2222) {
-            finish()
+            return finish()
         }
         if (requestCode == 101) {
             Thread.sleep(200)
