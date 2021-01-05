@@ -1,6 +1,7 @@
 package com.example.cs496_week1.fragments.album_fragment
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -75,9 +76,10 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
                         "com.example.cs496_week1.fileprovider",
                         it
                     )
-                    Log.d("Status", "" + photoURI)
+                    Log.d("Status", "photo Uri: " + photoURI)
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                    Log.d("Status", "end of addContentfunc")
                 }
             }
         }
@@ -85,7 +87,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        galleryAddPic()
+//        galleryAddPic()
     }
 
     private fun reStart() {
@@ -98,25 +100,26 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        //val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir: File? = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        Log.d("Status", "storage dir: " + storageDir.toString())
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
-            Log.d("Status", "" + absolutePath)
+            Log.d("Status", "absolute path: " + absolutePath)
         }
     }
 
-    private fun galleryAddPic() {
-        Log.d("Status", "current path: " + currentPhotoPath)
-        context!!.sendBroadcast(
-            Intent(
-                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.parse("content://com.example.cs496_week1.fileprovider/my_images/JPEG_20210104_233401_4288236463532751397.jpg")
-            )
-        )
-    }
+//    private fun galleryAddPic() {
+//        Log.d("Status", "current path: " + currentPhotoPath)
+//        context!!.sendBroadcast(
+//            Intent(
+//                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+//                Uri.parse("content://com.example.cs496_week1.fileprovider/my_images/JPEG_20210104_233401_4288236463532751397.jpg")
+//            )
+//        )
+//    }
 }

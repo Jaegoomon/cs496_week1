@@ -177,8 +177,8 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.SEND_SMS,
                     Manifest.permission.CAMERA,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 ),
                 111
             )
