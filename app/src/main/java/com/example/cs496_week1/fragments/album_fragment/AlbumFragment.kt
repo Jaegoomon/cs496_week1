@@ -116,8 +116,13 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private fun galleryAddPic() {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
             val f = File(currentPhotoPath)
-            mediaScanIntent.data = Uri.fromFile(f)
-            context!!.sendBroadcast(mediaScanIntent)
+            if(f.length() != 0L){
+                mediaScanIntent.data = Uri.fromFile(f)
+                context!!.sendBroadcast(mediaScanIntent)
+            } else {
+                f.delete()
+            }
+            Log.d("Status", "galleryAddPic: " + f.length())
         }
     }
 
