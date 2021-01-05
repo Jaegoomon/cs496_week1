@@ -1,25 +1,17 @@
 package com.example.cs496_week1.fragments.album_fragment
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.ComponentName
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.MainActivity
 import com.example.cs496_week1.R
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -81,7 +72,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         context!!,
-                        "com.example.android.fileprovider",
+                        "com.example.cs496_week1.fileprovider",
                         it
                     )
                     Log.d("Status", "" + photoURI)
@@ -104,6 +95,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
         System.exit(0)
     }
 
+    @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -119,13 +111,12 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     }
 
     private fun galleryAddPic() {
-        Log.d("Status", "galleryAddPic")
-        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-            val f = File(currentPhotoPath)
-            mediaScanIntent.data = Uri.fromFile(f)
-            context!!.sendBroadcast(mediaScanIntent)
-            Log.d("Status", "" + f)
-        }
+        Log.d("Status", "current path: " + currentPhotoPath)
+        context!!.sendBroadcast(
+            Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.parse("content://com.example.cs496_week1.fileprovider/my_images/JPEG_20210104_233401_4288236463532751397.jpg")
+            )
+        )
     }
-
 }
