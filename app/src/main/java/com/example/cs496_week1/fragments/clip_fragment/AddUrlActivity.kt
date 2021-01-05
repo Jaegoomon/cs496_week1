@@ -59,7 +59,7 @@ class AddUrlActivity : AppCompatActivity() {
             title.setText(receiveEditData[0])
             content.setText(receiveEditData[1])
             url.setText(receiveEditData[2])
-            tag.setText(receiveEditData[3])
+            tag.text = receiveEditData[3]
             true_id = receiveEditData[4].toInt()
             logo.setTint(colors.getColor(receiveEditData[5].toInt(), 0))
             tag.background = logo
@@ -106,11 +106,11 @@ class AddUrlActivity : AppCompatActivity() {
 
             val clipData = ClipRealmData()
             var nextId: Int? = null
-            if (true_id != null) {
-                nextId = true_id
+            nextId = if (true_id != null) {
+                true_id
             } else {
                 val index: Number? = realm.where(ClipRealmData::class.java).max("id")
-                nextId = if (index == null) {
+                if (index == null) {
                     0
                 } else {
                     index.toInt() + 1
@@ -123,7 +123,7 @@ class AddUrlActivity : AppCompatActivity() {
             clipData.title = title.text.toString()
             clipData.content = content.text.toString()
             clipData.tag = tag.text.toString()
-            clipData.tag_color = tagColor!!
+            clipData.tagColor = tagColor!!
 
             realm.executeTransaction {
                 it.copyToRealmOrUpdate(clipData)

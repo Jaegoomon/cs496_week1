@@ -11,5 +11,5 @@ open class ClipRealmData : RealmObject() {
     var title: String = ""
     var content: String = ""
     var tag: String = ""
-    var tag_color: Int = 0
+    var tagColor: Int = 0
 }

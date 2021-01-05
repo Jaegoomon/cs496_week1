@@ -16,7 +16,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_week1.R
 import io.realm.OrderedRealmCollection
@@ -57,7 +56,7 @@ class ClipRecyclerFilterAdapter(
 
         val logo = context.resources.getDrawable(R.drawable.logo)
         logo.setTint(
-            context.resources.obtainTypedArray(R.array.tag_color).getColor(clipData!!.tag_color, 0)
+            context.resources.obtainTypedArray(R.array.tag_color).getColor(clipData!!.tagColor, 0)
         )
         holder.itemTag.background = logo
 
@@ -90,7 +89,7 @@ class ClipRecyclerFilterAdapter(
                 clipData!!.url,
                 clipData!!.tag,
                 clipData!!.id.toString(),
-                clipData!!.tag_color.toString()
+                clipData!!.tagColor.toString()
             )
             intent.putExtra("editData", editData)
             context.startActivity(intent)

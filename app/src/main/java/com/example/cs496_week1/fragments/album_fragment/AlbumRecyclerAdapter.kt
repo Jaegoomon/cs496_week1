@@ -14,9 +14,8 @@ class AlbumRecyclerAdapter(img: ArrayList<String>) :
     var img = img
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var itemImg: ImageView
+        var itemImg: ImageView = itemView.findViewById(R.id.thumbImage)
         init {
-            itemImg = itemView.findViewById(R.id.thumbImage)
             itemView.setOnClickListener {
                 val position: Int = adapterPosition
                 val context = itemView.context
