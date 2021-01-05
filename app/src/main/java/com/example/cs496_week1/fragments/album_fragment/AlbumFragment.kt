@@ -1,11 +1,7 @@
 package com.example.cs496_week1.fragments.album_fragment
 
-import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -44,13 +40,13 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         Log.d("Status", "Fragment onViewCreated")
-        val add_button: FloatingActionButton = itemView.findViewById(R.id.add_button)
+//        val add_button: FloatingActionButton = itemView.findViewById(R.id.add_button)
         itemView.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = GridLayoutManager(activity, 3)
             albumRecyclerAdapter = AlbumRecyclerAdapter(cursor)
             adapter = albumRecyclerAdapter
         }
-        addButtonListener(add_button)
+//        addButtonListener(add_button)
     }
 
     private fun addButtonListener(button: FloatingActionButton) {

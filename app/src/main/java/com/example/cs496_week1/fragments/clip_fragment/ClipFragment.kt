@@ -32,7 +32,7 @@ class ClipFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val add_button: FloatingActionButton = view.findViewById(R.id.add_button)
+//        val add_button: FloatingActionButton = view.findViewById(R.id.add_button)
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
         rcAdapter = ClipRecyclerFilterAdapter(
             context!!,
@@ -42,14 +42,14 @@ class ClipFragment : Fragment() {
         recycler_view.apply {
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             adapter = rcAdapter
-            addButtonListener(add_button)
+//            addButtonListener(add_button)
         }
     }
 
-    private fun addButtonListener(button: FloatingActionButton) {
-        button.setOnClickListener {
-            val intent: Intent = Intent(activity, AddUrlActivity::class.java)
-            startActivity(intent)
-        }
-    }
+//    private fun addButtonListener(button: FloatingActionButton) {
+//        button.setOnClickListener {
+//            val intent: Intent = Intent(activity, AddUrlActivity::class.java)
+//            startActivity(intent)
+//        }
+//    }
 }

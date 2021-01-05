@@ -6,10 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import android.widget.Toast.LENGTH_SHORT
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -67,6 +64,10 @@ class AddUrlActivity : AppCompatActivity() {
             logo.setTint(colors.getColor(receiveEditData[5].toInt(), 0))
             tag.background = logo
             tagColor = receiveEditData[5].toInt()
+        }
+
+        findViewById<LinearLayout>(R.id.background).setOnClickListener {
+            onBackPressed()
         }
 
         tag.setOnClickListener {

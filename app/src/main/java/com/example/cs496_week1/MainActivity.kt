@@ -123,6 +123,7 @@ class MainActivity : AppCompatActivity() {
                     else -> {
                         controller1.show()
                         controller2.hide()
+                        controller3.hide()
                         flag = 0
                         Log.d("page listener", "page1")
                     }
@@ -139,7 +140,6 @@ class MainActivity : AppCompatActivity() {
             addPicture {
                 adapter.fragment2.addContentfunc(this@MainActivity)
             }
-
         }
         controller3.setOnClickListener {
             Log.d("Clicked", "3 is clicked")
@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity() {
         setUpTabs(contactData, photoData, defualtPage)
     }
 
-    private fun readUrlData(intent: Intent?) {
+    private fun readUrlData(intent: Intent?, defaultPage: Int = 0) {
         when {
             intent?.action == Intent.ACTION_SEND -> {
                 if ("text/plain" == intent.type) {

@@ -33,13 +33,13 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("sequence", "ContactFragment-onViewCreated")
         val recycler_view: RecyclerView = view.findViewById(R.id.recycler_view)
-        val add_button: FloatingActionButton = view.findViewById(R.id.add_button)
+//        val add_button: FloatingActionButton = view.findViewById(R.id.add_button)
         rcAdapter = ContactRecyclerAdapter(context, cursor)
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = rcAdapter
         }
-        addButtonListener(add_button)
+//        addButtonListener(add_button)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -48,16 +48,16 @@ class ContactFragment(cursor: ArrayList<ContactInfo>) : Fragment() {
         Log.d("sequence", "ContactFragment-onActivityResult123")
     }
 
-    private fun addButtonListener(button: FloatingActionButton) {
-        button.setOnClickListener {
-            (activity as MainActivity).addContentfunc()
-        }
-    }
+//    private fun addButtonListener(button: FloatingActionButton) {
+//        button.setOnClickListener {
+//            (activity as MainActivity).addContentfunc()
+//        }
+//    }
 
-    private fun reStart() {
-        activity?.finishAffinity()
-        val intent = Intent(activity, MainActivity::class.java)
-        startActivity(intent)
-        System.exit(0)
-    }
+//    private fun reStart() {
+//        activity?.finishAffinity()
+//        val intent = Intent(activity, MainActivity::class.java)
+//        startActivity(intent)
+//        System.exit(0)
+//    }
 }
