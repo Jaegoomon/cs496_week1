@@ -54,16 +54,21 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     }
 
     private fun addButtonListener(button: ImageButton) {
+//        button.setOnClickListener {
+//            AlertDialog.Builder(activity)
+//                .setTitle("메뉴를 선택하세요")
+//                .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
+//                .setNegativeButton("사진 촬영") { dialogInterface: DialogInterface, i: Int ->
+//                    (context as MainActivity).addPicture {
+//                        addContentfunc(it)
+//                    }
+//                }
+//                .show()
+//        }
         button.setOnClickListener {
-            AlertDialog.Builder(activity)
-                .setTitle("메뉴를 선택하세요")
-                .setPositiveButton("새로고침") { dialogInterface: DialogInterface, i: Int -> reStart() }
-                .setNegativeButton("사진 촬영") { dialogInterface: DialogInterface, i: Int ->
-                    (context as MainActivity).addPicture {
-                        addContentfunc(it)
-                    }
-                }
-                .show()
+            (context as MainActivity).addPicture {
+                addContentfunc(it)
+            }
         }
     }
 

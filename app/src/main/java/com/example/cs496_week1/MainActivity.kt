@@ -61,12 +61,12 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
         if (requestCode == 101) {
-            Thread.sleep(100)
+            Thread.sleep(200)
             Log.d("Status", "onActivityResul request code 101")
             readData()
             return
         }
-        Thread.sleep(100)
+        Thread.sleep(200)
         readData(1)
     }
 
