@@ -87,7 +87,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        galleryAddPic()
+        galleryAddPic()
     }
 
     private fun reStart() {
@@ -101,7 +101,7 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         //val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val storageDir: File? = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val storageDir: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         Log.d("Status", "storage dir: " + storageDir.toString())
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
@@ -109,17 +109,16 @@ class AlbumFragment(cursor: ArrayList<String>) : Fragment() {
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
             Log.d("Status", "absolute path: " + absolutePath)
         }
     }
 
-//    private fun galleryAddPic() {
-//        Log.d("Status", "current path: " + currentPhotoPath)
-//        context!!.sendBroadcast(
-//            Intent(
-//                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-//                Uri.parse("content://com.example.cs496_week1.fileprovider/my_images/JPEG_20210104_233401_4288236463532751397.jpg")
-//            )
-//        )
-//    }
+    private fun galleryAddPic() {
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            val f = File(currentPhotoPath)
+            mediaScanIntent.data = Uri.fromFile(f)
+            context!!.sendBroadcast(mediaScanIntent)
+        }
+    }
 }
