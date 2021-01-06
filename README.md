@@ -6,7 +6,7 @@
 
 * Tab1: 전화번호부 연동앱으로 스마트폰에 있는 전화번호부 데이터를 가져와 리사이클러뷰를 이용해 뷰를 그려준다.
 * Tab2: 갤러리 앱으로 Tab1과 마찬가지로 스마트폰 내의 갤러리 앱의 사진 URI를 불러와 리사이클러뷰를 이용해 뷰를 그려준다.
-* Tab3: 웹 주소를 북마크하여 간단한 메모와 태그를 남길 수 있는 앱으로 구글 플레이스토어에 있는 ***[LinKeep](https://play.google.com/store/apps/details?id=com.francescopennella.linkeep)***의 기능을 가능한 비슷하게 구현하였다.
+* Tab3: 웹 주소를 북마크하여 간단한 메모와 태그를 남길 수 있는 앱으로 구글 플레이스토어에 있는 *[LinKeep](https://play.google.com/store/apps/details?id=com.francescopennella.linkeep)* 의 기능을 가능한 비슷하게 구현하였다.
 
 
 
