@@ -132,6 +132,17 @@
 
 현 프로젝트의 경우 앱이 실행됨과 동시에 앱 구동에 필요한 모든 퍼미션을 한 액티비티 안에서 모두 받도록 설계를 하였다. 이는 구현하는 과정에서는 퍼미션과 관련된 요청 부분을 쉽게 처리할 수 있었지만 사용자 경험을 상당히 떨어뜨리는 방식이기 때문에 유동적인 퍼미션 요청이 필요할 것으로 보인다.
 
+## Reference
+
+* [오준석의 안드로이드 생존코딩](http://www.yes24.com/Product/Goods/64494679)
+* [Do it! 앱 안드로이드 프로그래밍](http://www.yes24.com/Product/Goods/89393757)
+
+* [Android 개발자](https://developer.android.com/?hl=ko)
+* [CardView with RecyclerView](https://medium.com/inside-ppl-b7/recyclerview-inside-fragment-with-android-studio-680cbed59d84)
+* [Linkeep 구글 플레이스토어 앱](https://play.google.com/store/apps/details?id=com.francescopennella.linkeep&hl=ko)
+* [화면전화 오류 수정](http://jinyongjeong.github.io/2018/09/30/configchange_option/)
+* [임시파일 삭제 오류](https://stackoverflow.com/questions/7131930/get-the-file-size-in-android-sdk/23559921)
+
 
 
 
